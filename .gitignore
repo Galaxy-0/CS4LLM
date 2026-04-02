@@ -1,0 +1,43 @@
+.DS_Store
+*.o
+*.out
+*.swp
+build/
+
+# Child repos with their own .git (don't track in parent)
+06-MIT-6.S081-xv6-labs/
+08-CMU-15-445-BusTub/
+09-MIT-6.5840-Distributed-Systems/
+
+# Build artifacts
+**/mrapps/*.so
+**/mr-out-*
+**/.check-build
+**/fs.img
+**/kernel.asm
+**/kernel.sym
+**/initcode
+**/initcode.out
+**/clox/build/
+**/nanoc/build/
+**/nanoc/tests/*.s
+**/nanoc/tests/*.o
+**/nanoc/tests/factorial
+**/nanoc/tests/fib
+**/nanoc/tests/control
+**/nanoc/tests/loop
+**/nanoc/tests/simple
+
+# Rust build artifacts
+**/target/
+**/Cargo.lock
+
+# Compiled binaries in archive
+00-Archive-Early-Experiments/**/crash
+00-Archive-Early-Experiments/**/fork_magic
+00-Archive-Early-Experiments/**/linked_list
+00-Archive-Early-Experiments/**/reverse
+00-Archive-Early-Experiments/**/server
+00-Archive-Early-Experiments/**/lexer
+00-Archive-Early-Experiments/**/game_logic
+00-Archive-Early-Experiments/**/my_custom_app

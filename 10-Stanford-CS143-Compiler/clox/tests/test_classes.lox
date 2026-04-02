@@ -1,0 +1,84 @@
+// Basic class and instance
+class Pair {
+    init(first, second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    sum() {
+        return this.first + this.second;
+    }
+
+    toString() {
+        return "(" + this.first + ", " + this.second + ")";
+    }
+}
+
+var p = Pair(1, 2);
+print p.sum();
+print p.first;
+print p.second;
+
+// Fields
+p.first = 10;
+print p.sum();
+
+// Inheritance
+class Animal {
+    init(name) {
+        this.name = name;
+    }
+
+    speak() {
+        return this.name + " makes a sound";
+    }
+}
+
+class Dog < Animal {
+    init(name, breed) {
+        super.init(name);
+        this.breed = breed;
+    }
+
+    speak() {
+        return this.name + " barks";
+    }
+
+    info() {
+        return this.name + " is a " + this.breed;
+    }
+}
+
+var d = Dog("Rex", "Labrador");
+print d.speak();
+print d.info();
+
+// super call
+class Cat < Animal {
+    speak() {
+        var base = super.speak();
+        return base + " (meow)";
+    }
+}
+
+var c = Cat("Whiskers");
+print c.speak();
+
+// Method as first-class value
+class Counter {
+    init() {
+        this.count = 0;
+    }
+
+    increment() {
+        this.count = this.count + 1;
+        return this.count;
+    }
+}
+
+var counter = Counter();
+print counter.increment();
+print counter.increment();
+print counter.increment();
+
+print "all class tests passed";

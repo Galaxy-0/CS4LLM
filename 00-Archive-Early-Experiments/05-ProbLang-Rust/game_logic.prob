@@ -1,0 +1,15 @@
+// 英雄联盟/黑神话悟空：底层 Boss 战概率判定伪代码脚本
+let boss_health = 10000 * 5;
+let player_base_attack = 50 + 10 * 3;
+
+// 1% 的极小概率触发：玩家刀刀暴击，秒杀机制
+predictive_if (0.01) {
+    let fatal_damage = player_base_attack * 999;
+    trigger_boss_death_animation
+}
+
+// 50% 概率触发：普通格挡判定
+predictive_if (0.5) {
+    let block_damage = player_base_attack / 2;
+    trigger_player_stagger
+}

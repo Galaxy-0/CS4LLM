@@ -1,0 +1,9 @@
+[package]
+name = "problang"
+version = "0.1.0"
+edition = "2021"
+authors = ["CS4LLM Founder <founder@problang.io>"]
+description = "A System-Level Probabilistic Programming Language"
+
+[dependencies]
+# 这里未来会引入极度牛逼的 Rust 库，比如 llvm-sys，或者 lalrpop 语法树生成器

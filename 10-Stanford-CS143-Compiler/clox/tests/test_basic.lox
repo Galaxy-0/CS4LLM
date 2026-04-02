@@ -1,0 +1,51 @@
+// Ch18: types and comparisons
+print 1 + 2;
+print true;
+print !false;
+print nil;
+print 3 > 2;
+print 1 == 1;
+print "hello" == "hello";
+
+// Ch19: strings
+print "hello" + " " + "world";
+
+// Ch21: global variables
+var x = 10;
+var y = 20;
+print x + y;
+
+// Ch22: local variables and scoping
+{
+    var a = 1;
+    var b = 2;
+    print a + b;
+}
+
+// Ch23: control flow
+if (true) {
+    print "if works";
+}
+
+if (false) {
+    print "FAIL";
+} else {
+    print "else works";
+}
+
+// while loop
+var i = 0;
+while (i < 3) {
+    print i;
+    i = i + 1;
+}
+
+// for loop
+for (var j = 10; j < 13; j = j + 1) {
+    print j;
+}
+
+// logical operators
+print true and false;
+print false or true;
+print "done";
