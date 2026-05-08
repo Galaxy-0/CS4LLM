@@ -21,7 +21,7 @@ This top-level repository is a workspace manager, not a replacement for the chil
 
 - [06-MIT-6.S081-xv6-labs](./06-MIT-6.S081-xv6-labs): operating systems / xv6 labs
 - [08-CMU-15-445-BusTub](./08-CMU-15-445-BusTub): database systems / BusTub
-- [09-MIT-6.824-Distributed](./09-MIT-6.824-Distributed): distributed systems / 6.824 labs
+- [09-MIT-6.5840-Distributed-Systems](./09-MIT-6.5840-Distributed-Systems): distributed systems / 6.5840 labs
 - [07-Stanford-CS144-Sponge](./07-Stanford-CS144-Sponge): placeholder, waiting for official skeleton
-- [10-Stanford-CS143-Compiler](./10-Stanford-CS143-Compiler): placeholder, waiting for official skeleton
+- [10-Stanford-CS143-Compiler](./10-Stanford-CS143-Compiler): compiler systems / clox VM and nanoc compiler practice
 - [00-Archive-Early-Experiments](./00-Archive-Early-Experiments): early experiments and drafts, not the main execution path

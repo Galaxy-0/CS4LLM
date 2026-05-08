@@ -1,3 +1,3 @@
-# CS144 官方骨架
+# CS144 Placeholder
 
-请在 https://cs144.github.io/ 注册后获取官方源码包
+官方 Sponge skeleton 尚未加入本 workspace。请在 https://cs144.github.io/ 注册并获取源码包后再放入本目录。

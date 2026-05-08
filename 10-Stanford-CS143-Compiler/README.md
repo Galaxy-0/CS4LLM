@@ -1,8 +1,8 @@
-# Compiler Project — clox (Crafting Interpreters)
+# Compiler Projects
 
-A complete bytecode virtual machine for the Lox language, implemented in C following *Crafting Interpreters* Part III.
+This directory tracks local compiler practice projects. It is workspace-tracked rather than an independent course skeleton repository.
 
-## Build & Run
+## clox
 
 ```bash
 cd clox
@@ -12,7 +12,9 @@ make test     # run all tests
 ./build/clox tests/test_basic.lox  # run a file
 ```
 
-## What's Implemented (Ch14-29)
+A complete bytecode virtual machine for the Lox language, implemented in C following *Crafting Interpreters* Part III.
+
+### What's Implemented (Ch14-29)
 
 - **Bytecode chunks** — dynamic array of instructions + constant pool + line info
 - **Stack-based VM** — instruction dispatch loop with runtime type checking
@@ -26,9 +28,9 @@ make test     # run all tests
 - **Functions** — first-class, closures with upvalue capture
 - **Garbage collector** — mark-sweep, tri-color marking, GC stress test mode
 - **Classes** — instances, fields, methods, `this`, `init` constructors
-- **Inheritance** — `<` syntax, `super` calls, method resolution via copy-down
+- **Inheritance** - `<` syntax, `super` calls, method resolution via copy-down
 
-## Project Structure
+### Project Structure
 
 ```
 clox/
@@ -45,5 +47,40 @@ clox/
     debug.c/h     — disassembler
     common.h      — shared includes and debug flags
   tests/          — .lox test scripts
+  Makefile
+```
+
+## nanoc
+
+```bash
+cd nanoc
+make          # build
+make test     # compile and run sample programs
+./build/nanoc --ast --ir tests/simple.nano
+```
+
+A compact C-like compiler practice project with a full source-to-native pipeline:
+
+- Lexer and parser for `.nano` source files
+- AST construction and printing
+- Type checking for integer and boolean programs
+- IR generation and optimization passes
+- ARM64 assembly code generation
+- Assemble/link step to produce local executables on macOS
+
+### Project Structure
+
+```
+nanoc/
+  src/
+    lexer.c/h      - tokenizer
+    parser.c/h     - parser and AST builder
+    ast.c/h        - syntax tree structures and printer
+    typecheck.c/h  - semantic checks
+    ir.c/h         - intermediate representation
+    optimize.c/h   - IR optimization
+    codegen.c/h    - ARM64 assembly generation
+    main.c         - compiler driver
+  tests/           - .nano sample programs
   Makefile
 ```
