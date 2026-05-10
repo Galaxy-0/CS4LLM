@@ -15,6 +15,8 @@ This top-level repository is a workspace manager, not a replacement for the chil
 - [ROADMAP.md](./ROADMAP.md): high-level learning path
 - [KNOWLEDGE_MAP.md](./KNOWLEDGE_MAP.md): CS/AI knowledge map and review guide
 - [ASSESSMENT.md](./ASSESSMENT.md): CS capability scorecard for agent-assisted engineering judgment
+- [BASELINE_QUESTIONNAIRE.html](./BASELINE_QUESTIONNAIRE.html): fillable five-dimension diagnostic with local autosave and Markdown export
+- [BASELINE_QUESTIONNAIRE.md](./BASELINE_QUESTIONNAIRE.md): five-dimension diagnostic for the first month
 - [GOAL.md](./GOAL.md): CS catch-up operating contract and criteria
 - [00_CS_Undergrad_Standard.md](./00_CS_Undergrad_Standard.md): capability baseline
 - [WORKSPACE.md](./WORKSPACE.md): project map, workflow, and common commands

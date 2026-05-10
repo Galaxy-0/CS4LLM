@@ -105,6 +105,27 @@ A module can raise its score only with evidence.
 
 No evidence, no score increase.
 
+## Baseline Diagnostic
+
+Use [BASELINE_QUESTIONNAIRE.html](./BASELINE_QUESTIONNAIRE.html) for the fillable first-month diagnostic. The Markdown source version is [BASELINE_QUESTIONNAIRE.md](./BASELINE_QUESTIONNAIRE.md).
+
+It measures five practical dimensions:
+
+1. Map and mental model.
+2. Code path and local navigation.
+3. Invariant and failure mode.
+4. Verification and debug loop.
+5. Agent collaboration and architecture judgment.
+
+Each dimension should be scored twice:
+
+```text
+Pass A: independent, no search and no AI
+Pass B: AI-assisted, after Codex/repo help
+```
+
+The gap between Pass A and Pass B is a useful signal. A large gap means the user has strong leverage with agents but still needs more internal ownership.
+
 ## Current 8-Module Sprint
 
 Do not open more tracks until these are reviewed at Level 2-3:

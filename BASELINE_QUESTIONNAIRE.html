@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS4LLM 五维摸底问卷</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #5f6f7c;
+      --line: #d9e1e8;
+      --panel: #ffffff;
+      --panel-soft: #f6f8fb;
+      --bg: #eef3f6;
+      --blue: #2f6fbd;
+      --green: #247b5a;
+      --amber: #b66b18;
+      --red: #b54848;
+      --violet: #6656a8;
+      --shadow: 0 14px 34px rgba(23, 32, 42, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      border-color: #aebdca;
+      background: #f9fbfc;
+    }
+
+    button.primary {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: #fff;
+    }
+
+    button.primary:hover {
+      background: #255fa4;
+    }
+
+    button.danger {
+      color: var(--red);
+      border-color: #e4b9b9;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px;
+      border-right: 1px solid var(--line);
+      background: #fbfcfd;
+      overflow: auto;
+    }
+
+    main {
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .meta {
+      display: grid;
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      padding: 9px 10px;
+    }
+
+    textarea {
+      min-height: 116px;
+      resize: vertical;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 20px;
+    }
+
+    .nav {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .nav button {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      text-align: left;
+      min-height: 48px;
+    }
+
+    .nav button.active {
+      border-color: var(--blue);
+      background: #edf5ff;
+    }
+
+    .nav-index {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      background: var(--panel-soft);
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .nav-score {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .summary {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .chart-wrap {
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    canvas {
+      width: 100%;
+      max-width: 260px;
+      aspect-ratio: 1;
+    }
+
+    .legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot-a {
+      background: var(--amber);
+    }
+
+    .dot-b {
+      background: var(--blue);
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section-head {
+      display: grid;
+      gap: 8px;
+      padding: 22px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .section-body {
+      display: grid;
+      gap: 18px;
+      padding: 22px;
+    }
+
+    .question {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .question-head {
+      display: grid;
+      gap: 8px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel-soft);
+    }
+
+    .question-code {
+      margin: 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      background: #17202a;
+      color: #eff6ff;
+      border-radius: 6px;
+      padding: 12px;
+    }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .answer-column {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .answer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 28px;
+    }
+
+    .answer-head strong {
+      font-size: 14px;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 92px;
+      gap: 10px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .metric-title {
+      font-size: 13px;
+      color: var(--muted);
+      min-height: 40px;
+    }
+
+    .metric-score {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .metric-score strong {
+      font-size: 24px;
+    }
+
+    .metric-score span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 16px 22px;
+      border-top: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      max-width: min(360px, calc(100vw - 36px));
+      padding: 12px 14px;
+      border-radius: 8px;
+      color: #fff;
+      background: #17202a;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 160ms ease, transform 160ms ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        height: auto;
+      }
+
+      main {
+        padding: 16px;
+      }
+
+      .answer-grid,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <h1>五维摸底</h1>
+      <p class="muted">CS4LLM 第一个月诊断。先独立答，再用 Codex/仓库补一轮，观察差距。</p>
+
+      <div class="meta">
+        <label>
+          日期
+          <input id="date" type="date">
+        </label>
+        <label>
+          当前状态
+          <select id="mode">
+            <option value="initial">月初摸底</option>
+            <option value="weekly">周中复盘</option>
+            <option value="retest">月末复测</option>
+          </select>
+        </label>
+        <label>
+          今天精力
+          <select id="energy">
+            <option value="low">低：只做快速版</option>
+            <option value="medium">中：做完整 Pass A</option>
+            <option value="high">高：Pass A + Pass B</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="toolbar">
+        <button class="primary" id="exportBtn" type="button">导出</button>
+        <button id="copyBtn" type="button">复制</button>
+        <button class="danger" id="resetBtn" type="button">清空</button>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="radar" width="520" height="520" aria-label="五维能力雷达图"></canvas>
+      </div>
+      <div class="legend">
+        <span><i class="dot dot-a"></i>独立</span>
+        <span><i class="dot dot-b"></i>AI 辅助</span>
+      </div>
+
+      <div class="nav" id="nav"></div>
+    </aside>
+
+    <main>
+      <div class="panel">
+        <div class="section-head">
+          <h2 id="sectionTitle"></h2>
+          <p class="muted" id="sectionIntro"></p>
+          <div class="result-grid" id="resultGrid"></div>
+        </div>
+        <div class="section-body" id="questions"></div>
+        <div class="bottom-bar">
+          <button id="prevBtn" type="button">上一维</button>
+          <button class="primary" id="nextBtn" type="button">下一维</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "cs4llm-baseline-questionnaire-v1";
+
+    const dimensions = [
+      {
+        id: "d1",
+        short: "D1",
+        title: "地图与心智模型",
+        intro: "看你能不能把概念放回 CS 地图，并用人话讲清它解决什么问题。",
+        questions: [
+          {
+            id: "q1",
+            title: "放置模块",
+            prompt: "不查资料，把这些项目放到 CS 知识地图里，并各写一句它解决的问题。",
+            code: "MapReduce\nxv6 syscall / trap\nBusTub Buffer Pool\nclox VM\nTCP reliable stream\nRaft leader election"
+          },
+          {
+            id: "q2",
+            title: "解释一个正常流程",
+            prompt: "任选一个，用角色和状态变化解释正常流程，不要只写定义。",
+            code: "A. MapReduce: input files -> workers -> map -> intermediate files -> reduce -> output\nB. xv6 syscall: user program -> trap -> kernel handler -> return to user\nC. clox VM: source code -> bytecode -> stack VM execution -> result"
+          },
+          {
+            id: "q3",
+            title: "连接一次真实请求",
+            prompt: "想象用户调用 Put(\"x\", \"1\")。在复制式 KV 服务里，可能涉及哪些 CS 区域？",
+            code: "program/runtime\noperating system\nnetwork\nRaft/distributed systems\nstorage/database"
+          }
+        ]
+      },
+      {
+        id: "d2",
+        short: "D2",
+        title: "代码路径与仓库导航",
+        intro: "看你能不能进入真实 repo，找到入口、状态变化、测试和可插桩的位置。",
+        questions: [
+          {
+            id: "q1",
+            title: "寻找 MapReduce retry",
+            prompt: "如果要检查 MapReduce 怎么处理慢 worker 或崩溃 worker，你会看哪些文件、函数、日志、测试或搜索关键词？",
+            code: "目标：不是背 exact name，而是说明你的导航策略。"
+          },
+          {
+            id: "q2",
+            title: "追踪一次输入到输出",
+            prompt: "任选一个模块，用 entry -> state change -> internal call -> output/reply 写出大概路径。",
+            code: "A. MapReduce worker asks for work and reports completion\nB. xv6 user program calls a syscall\nC. BusTub fetches a page through the buffer pool\nD. clox executes a function call\nE. Raft client command becomes replicated state"
+          },
+          {
+            id: "q3",
+            title: "进入陌生 repo",
+            prompt: "打开一个你不熟的课程仓库时，你如何找到主入口、核心源码、最小验证命令、以及加日志/断言的位置？",
+            code: "1. main executable or test entry\n2. core source files\n3. smallest command that proves something works\n4. place to add a log or assertion"
+          }
+        ]
+      },
+      {
+        id: "d3",
+        short: "D3",
+        title: "不变量与失败模式",
+        intro: "看你能不能说出系统必须保持什么，以及它具体会怎么坏。",
+        questions: [
+          {
+            id: "q1",
+            title: "MapReduce 不变量",
+            prompt: "回答三个问题，并用一句话写出一个不变量。",
+            code: "Why must Reduce wait until all Map tasks are complete?\nWhat can go wrong if a worker dies halfway through a task?\nWhat can go wrong if the same task runs twice?"
+          },
+          {
+            id: "q2",
+            title: "Buffer Pool 或 B+ Tree 不变量",
+            prompt: "任选一个，说明什么必须保持为真，什么失败会导致数据损坏或错误查询。",
+            code: "A. Buffer Pool: page pin count, dirty flag, eviction\nB. B+ Tree: sorted keys, leaf links, split/merge behavior"
+          },
+          {
+            id: "q3",
+            title: "Raft 或 TCP 失败",
+            prompt: "任选一个失败模式，解释它如何发生，以及系统本应如何控制它。",
+            code: "A. Raft: stale leader, split vote, lost log entry, duplicated command\nB. TCP: packet loss, reorder, duplicate packet, receiver buffer"
+          }
+        ]
+      },
+      {
+        id: "d4",
+        short: "D4",
+        title: "验证与 Debug 回路",
+        intro: "看你能不能设计小实验、处理偶发失败，并知道测试通过不等于完全正确。",
+        questions: [
+          {
+            id: "q1",
+            title: "证明 worker retry",
+            prompt: "设计一个小实验，检查 MapReduce 在 worker 死掉或卡住后会重新分配任务。",
+            code: "setup:\naction:\nexpected observation:\nwhat this proves:\nwhat this does not prove:"
+          },
+          {
+            id: "q2",
+            title: "Debug 偶发系统测试",
+            prompt: "一个分布式系统测试十次失败一次。你先看什么？写出你的默认 debug instinct。",
+            code: "logs\nstate variables\ntiming\nconcurrency\ntest seed\nminimal reproduction"
+          },
+          {
+            id: "q3",
+            title: "测试通过不等于证明",
+            prompt: "任选一个模块，写出测试通过证明了什么、没证明什么，以及一个仍可能存在的 bug。",
+            code: "passing tests prove:\npassing tests do not prove:\npossible hidden bug:"
+          }
+        ]
+      },
+      {
+        id: "d5",
+        short: "D5",
+        title: "Agent 协作与架构判断",
+        intro: "看你能不能用 agent 加速，同时保留自己的判断权。",
+        questions: [
+          {
+            id: "q1",
+            title: "向 Agent 提问但不丢 ownership",
+            prompt: "写一个给 Codex 的 prompt，用来复盘一个 CS 模块。它必须要求 agent 返回这些东西。",
+            code: "main concept\ncode path\nmain invariant\nfailure mode\nverification command or experiment\nwhat the user must be able to explain"
+          },
+          {
+            id: "q2",
+            title: "Review 一个 Agent patch",
+            prompt: "Codex 给你一个 Raft、Buffer Pool 或 MapReduce patch。接受之前你检查什么？",
+            code: "invariant\nfailure mode\ntests\ncode path\nconcurrency or retry behavior\nrollback plan"
+          },
+          {
+            id: "q3",
+            title: "规划第一个月",
+            prompt: "用知识地图选前三个模块。每个模块写 why now、stop condition、evidence。",
+            code: "module:\nwhy now:\nstop condition:\nevidence:"
+          }
+        ]
+      }
+    ];
+
+    let state = loadState();
+    let currentIndex = 0;
+
+    const byId = (id) => document.getElementById(id);
+
+    function defaultState() {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+      return {
+        date: `${yyyy}-${mm}-${dd}`,
+        mode: "initial",
+        energy: "medium",
+        answers: {}
+      };
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? { ...defaultState(), ...JSON.parse(raw) } : defaultState();
+      } catch {
+        return defaultState();
+      }
+    }
+
+    function saveState() {
+      state.date = byId("date").value;
+      state.mode = byId("mode").value;
+      state.energy = byId("energy").value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderNav();
+      renderResults();
+      drawRadar();
+    }
+
+    function answerKey(dimensionId, questionId) {
+      return `${dimensionId}-${questionId}`;
+    }
+
+    function getAnswer(dimensionId, questionId) {
+      const key = answerKey(dimensionId, questionId);
+      if (!state.answers[key]) {
+        state.answers[key] = {
+          independent: "",
+          assisted: "",
+          confidence: "low",
+          scoreA: "",
+          scoreB: ""
+        };
+      }
+      return state.answers[key];
+    }
+
+    function scoreNumber(value) {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function dimensionScore(dimension, pass) {
+      const raw = dimension.questions.reduce((total, question) => {
+        const answer = getAnswer(dimension.id, question.id);
+        return total + scoreNumber(pass === "A" ? answer.scoreA : answer.scoreB);
+      }, 0);
+      return { raw, pct: Math.round((raw / 12) * 100) };
+    }
+
+    function allScores(pass) {
+      return dimensions.map((dimension) => dimensionScore(dimension, pass).pct);
+    }
+
+    function renderNav() {
+      const nav = byId("nav");
+      nav.innerHTML = dimensions.map((dimension, index) => {
+        const a = dimensionScore(dimension, "A");
+        const b = dimensionScore(dimension, "B");
+        return `
+          <button type="button" class="${index === currentIndex ? "active" : ""}" data-index="${index}">
+            <span class="nav-index">${dimension.short}</span>
+            <span>${dimension.title}</span>
+            <span class="nav-score">A ${a.pct} / B ${b.pct}</span>
+          </button>
+        `;
+      }).join("");
+      nav.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          currentIndex = Number(button.dataset.index);
+          render();
+        });
+      });
+    }
+
+    function renderResults() {
+      const grid = byId("resultGrid");
+      grid.innerHTML = dimensions.map((dimension) => {
+        const a = dimensionScore(dimension, "A");
+        const b = dimensionScore(dimension, "B");
+        return `
+          <div class="metric">
+            <div class="metric-title">${dimension.short} ${dimension.title}</div>
+            <div class="metric-score"><strong>${a.pct}</strong><span>独立</span></div>
+            <div class="metric-score"><strong>${b.pct}</strong><span>AI 辅助</span></div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderQuestions() {
+      const dimension = dimensions[currentIndex];
+      byId("sectionTitle").textContent = `${dimension.short}. ${dimension.title}`;
+      byId("sectionIntro").textContent = dimension.intro;
+      byId("questions").innerHTML = dimension.questions.map((question) => {
+        const answer = getAnswer(dimension.id, question.id);
+        return `
+          <article class="question">
+            <div class="question-head">
+              <h3>${dimension.short}-${question.id.toUpperCase()} ${question.title}</h3>
+              <p class="muted">${question.prompt}</p>
+              <pre class="question-code">${escapeHtml(question.code)}</pre>
+            </div>
+            <div class="answer-grid">
+              <div class="answer-column">
+                <div class="answer-head">
+                  <strong>Pass A 独立回答</strong>
+                </div>
+                <textarea data-field="independent" data-dimension="${dimension.id}" data-question="${question.id}" placeholder="不查资料，先写你现在真实会说的版本。">${escapeHtml(answer.independent)}</textarea>
+                <div class="score-row">
+                  <label>
+                    信心
+                    <select data-field="confidence" data-dimension="${dimension.id}" data-question="${question.id}">
+                      ${confidenceOptions(answer.confidence)}
+                    </select>
+                  </label>
+                  <label>
+                    分数
+                    <select data-field="scoreA" data-dimension="${dimension.id}" data-question="${question.id}">
+                      ${scoreOptions(answer.scoreA)}
+                    </select>
+                  </label>
+                </div>
+              </div>
+              <div class="answer-column">
+                <div class="answer-head">
+                  <strong>Pass B AI 辅助后</strong>
+                </div>
+                <textarea data-field="assisted" data-dimension="${dimension.id}" data-question="${question.id}" placeholder="用 Codex / repo / 测试补一轮后，写更清楚的版本。">${escapeHtml(answer.assisted)}</textarea>
+                <div class="score-row">
+                  <label>
+                    修正点
+                    <input data-field="delta" data-dimension="${dimension.id}" data-question="${question.id}" value="${escapeHtml(answer.delta || "")}" placeholder="比如：补了不变量 / 找到了测试">
+                  </label>
+                  <label>
+                    分数
+                    <select data-field="scoreB" data-dimension="${dimension.id}" data-question="${question.id}">
+                      ${scoreOptions(answer.scoreB)}
+                    </select>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      byId("questions").querySelectorAll("textarea, select, input").forEach((field) => {
+        field.addEventListener("input", updateField);
+        field.addEventListener("change", updateField);
+      });
+    }
+
+    function confidenceOptions(selected) {
+      return ["low", "medium", "high"].map((value) => {
+        const label = value === "low" ? "低" : value === "medium" ? "中" : "高";
+        return `<option value="${value}" ${selected === value ? "selected" : ""}>${label}</option>`;
+      }).join("");
+    }
+
+    function scoreOptions(selected) {
+      const options = [`<option value="" ${selected === "" ? "selected" : ""}>-</option>`];
+      for (let i = 0; i <= 4; i += 1) {
+        options.push(`<option value="${i}" ${String(selected) === String(i) ? "selected" : ""}>${i}</option>`);
+      }
+      return options.join("");
+    }
+
+    function updateField(event) {
+      const field = event.target;
+      const answer = getAnswer(field.dataset.dimension, field.dataset.question);
+      answer[field.dataset.field] = field.value;
+      saveState();
+    }
+
+    function drawRadar() {
+      const canvas = byId("radar");
+      const ctx = canvas.getContext("2d");
+      const width = canvas.width;
+      const height = canvas.height;
+      const center = width / 2;
+      const radius = width * 0.36;
+      ctx.clearRect(0, 0, width, height);
+      ctx.lineWidth = 2;
+      ctx.font = "22px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      for (let ring = 1; ring <= 4; ring += 1) {
+        drawPolygon(ctx, Array(5).fill((radius * ring) / 4), center, "#d9e1e8", "transparent");
+      }
+
+      const labels = dimensions.map((dimension) => dimension.short);
+      labels.forEach((label, index) => {
+        const point = polarPoint(center, radius + 34, index, labels.length);
+        ctx.fillStyle = "#5f6f7c";
+        ctx.fillText(label, point.x, point.y);
+      });
+
+      drawPolygon(ctx, allScores("A").map((score) => (score / 100) * radius), center, "#b66b18", "rgba(182, 107, 24, 0.18)");
+      drawPolygon(ctx, allScores("B").map((score) => (score / 100) * radius), center, "#2f6fbd", "rgba(47, 111, 189, 0.18)");
+    }
+
+    function drawPolygon(ctx, radii, center, stroke, fill) {
+      ctx.beginPath();
+      radii.forEach((r, index) => {
+        const point = polarPoint(center, r, index, radii.length);
+        if (index === 0) ctx.moveTo(point.x, point.y);
+        else ctx.lineTo(point.x, point.y);
+      });
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.strokeStyle = stroke;
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    function polarPoint(center, radius, index, total) {
+      const angle = -Math.PI / 2 + (index * Math.PI * 2) / total;
+      return {
+        x: center + Math.cos(angle) * radius,
+        y: center + Math.sin(angle) * radius
+      };
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function markdown() {
+      const lines = [];
+      lines.push("# CS4LLM 五维摸底结果");
+      lines.push("");
+      lines.push(`Date: ${state.date || ""}`);
+      lines.push(`Mode: ${state.mode || ""}`);
+      lines.push(`Energy: ${state.energy || ""}`);
+      lines.push("");
+      lines.push("## Scores");
+      lines.push("");
+      lines.push("| Dimension | Pass A /100 | Pass B /100 | Gap |");
+      lines.push("| --- | ---: | ---: | ---: |");
+      dimensions.forEach((dimension) => {
+        const a = dimensionScore(dimension, "A").pct;
+        const b = dimensionScore(dimension, "B").pct;
+        lines.push(`| ${dimension.short} ${dimension.title} | ${a} | ${b} | ${b - a} |`);
+      });
+      lines.push("");
+
+      dimensions.forEach((dimension) => {
+        lines.push(`## ${dimension.short}. ${dimension.title}`);
+        lines.push("");
+        dimension.questions.forEach((question) => {
+          const answer = getAnswer(dimension.id, question.id);
+          lines.push(`### ${dimension.short}-${question.id.toUpperCase()} ${question.title}`);
+          lines.push("");
+          lines.push(`Confidence: ${answer.confidence || ""}`);
+          lines.push(`Pass A score: ${answer.scoreA || ""}`);
+          lines.push(`Pass B score: ${answer.scoreB || ""}`);
+          if (answer.delta) lines.push(`Pass B delta: ${answer.delta}`);
+          lines.push("");
+          lines.push("Pass A:");
+          lines.push(answer.independent || "");
+          lines.push("");
+          lines.push("Pass B:");
+          lines.push(answer.assisted || "");
+          lines.push("");
+        });
+      });
+
+      return lines.join("\n");
+    }
+
+    function exportMarkdown() {
+      saveState();
+      const blob = new Blob([markdown()], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `cs4llm-baseline-${state.date || "result"}.md`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast("已导出 Markdown。");
+    }
+
+    async function copyMarkdown() {
+      saveState();
+      try {
+        await navigator.clipboard.writeText(markdown());
+        showToast("已复制 Markdown。");
+      } catch {
+        showToast("浏览器没有开放剪贴板权限，可以用导出。");
+      }
+    }
+
+    function resetAll() {
+      const confirmed = window.confirm("确定清空当前浏览器里保存的问卷答案吗？");
+      if (!confirmed) return;
+      localStorage.removeItem(STORAGE_KEY);
+      state = defaultState();
+      currentIndex = 0;
+      hydrateMeta();
+      render();
+      showToast("已清空。");
+    }
+
+    function showToast(message) {
+      const toast = byId("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function hydrateMeta() {
+      byId("date").value = state.date;
+      byId("mode").value = state.mode;
+      byId("energy").value = state.energy;
+    }
+
+    function render() {
+      renderNav();
+      renderResults();
+      renderQuestions();
+      drawRadar();
+      byId("prevBtn").disabled = currentIndex === 0;
+      byId("nextBtn").textContent = currentIndex === dimensions.length - 1 ? "回到第一维" : "下一维";
+    }
+
+    byId("date").addEventListener("input", saveState);
+    byId("mode").addEventListener("change", saveState);
+    byId("energy").addEventListener("change", saveState);
+    byId("exportBtn").addEventListener("click", exportMarkdown);
+    byId("copyBtn").addEventListener("click", copyMarkdown);
+    byId("resetBtn").addEventListener("click", resetAll);
+    byId("prevBtn").addEventListener("click", () => {
+      currentIndex = Math.max(0, currentIndex - 1);
+      render();
+    });
+    byId("nextBtn").addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % dimensions.length;
+      render();
+    });
+
+    hydrateMeta();
+    render();
+  </script>
+</body>
+</html>
