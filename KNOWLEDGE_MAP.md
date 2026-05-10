@@ -6,6 +6,8 @@
 - 仓库里的项目分别对应哪些能力区？
 - 下一步应该复盘什么，而不是被一堆名词压住？
 
+本仓库的目标是 CS 快速补课和系统工程判断力训练。个人 founder / VC / 职业路线放在 `TODO` 仓库中维护。
+
 ## The Whole Map
 
 ```text
@@ -82,7 +84,7 @@
 | clox | VM 测试可跑 | 讲清 bytecode chunk、stack VM、object/GC |
 | nanoc | sample 编译链可跑 | 讲清 source -> AST -> typecheck -> IR -> assembly |
 | CS144 / Networking | skeleton 尚未加入 | 下一块大空白，适合作为后续新主线 |
-| AI/ML/Agent | 尚未纳入主线仓库 | 等 CS 系统骨架复盘稳定后再铺 track |
+| AI/ML/Agent | 尚未纳入主线仓库 | 仅保留为未来应用方向；本仓库先补 CS 系统骨架 |
 
 ## Six-Point Review Path
 

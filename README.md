@@ -1,6 +1,6 @@
 # CS4LLM
 
-Use LLM agents to accelerate systems-focused CS fundamentals while keeping each course project independently maintainable.
+Use LLM agents to speed-run systems-focused CS fundamentals while keeping each course project independently maintainable.
 
 ## Workspace Role
 
@@ -14,8 +14,8 @@ This top-level repository is a workspace manager, not a replacement for the chil
 
 - [ROADMAP.md](./ROADMAP.md): high-level learning path
 - [KNOWLEDGE_MAP.md](./KNOWLEDGE_MAP.md): CS/AI knowledge map and review guide
-- [ASSESSMENT.md](./ASSESSMENT.md): capability scorecard and five-year ladder
-- [GOAL.md](./GOAL.md): goal-driven operating contract and criteria
+- [ASSESSMENT.md](./ASSESSMENT.md): CS capability scorecard for agent-assisted engineering judgment
+- [GOAL.md](./GOAL.md): CS catch-up operating contract and criteria
 - [00_CS_Undergrad_Standard.md](./00_CS_Undergrad_Standard.md): capability baseline
 - [WORKSPACE.md](./WORKSPACE.md): project map, workflow, and common commands
 - `bash scripts/repo-status.sh`: one-shot status check for the workspace and child repositories

@@ -1,250 +1,166 @@
-# Goal-Driven Operating Contract
+# CS4LLM Goal Contract
 
-This file turns the broad five-year ladder into a criteria-driven execution loop for `CS4LLM`.
+This repository has one job:
 
-The five-year ladder is the north star:
+> Use AI agents to speed-run CS fundamentals until the user can collaborate with agents at an engineer / architect level, with enough conceptual ownership to judge reliability instead of trusting generated code blindly.
+
+This is not the home for the user's full personal five-year plan. Founder / VC / career strategy belongs in the TODO repository.
+
+## Boundary
+
+In scope for `CS4LLM`:
+
+- CS fundamentals catch-up.
+- Systems project review.
+- Agent-assisted engineering judgment.
+- Reliability concepts: invariants, failure modes, tests, debug paths.
+- Course/project artifacts: xv6, BusTub, 6.5840, CS144, compilers.
+
+Out of scope for `CS4LLM`:
+
+- Personal identity planning.
+- Founder operating plan.
+- VC / operator-investor roadmap.
+- Commercial strategy and user acquisition plans.
+
+Those belong in:
 
 ```text
-高级独立全栈开发者 -> operator-founder -> VC / operator-investor
+/Users/galaxy/Project/GalaxyAI/TODO
 ```
-
-The Goal-Driven loop should not try to verify the whole five-year identity arc directly. It should verify near-term evidence that compounds toward that arc.
 
 ## Current Goal
 
-Over the next 12 weeks, convert the existing CS/AI project artifacts into independently owned capability evidence, while starting a small but measurable founder loop.
+Build a fast CS catch-up system that converts existing project artifacts into usable engineering and architecture judgment.
 
-## Why This Goal
+The goal is not to return to pre-AI "hand-code everything" learning.
 
-The current assessment says:
+The goal is:
 
 ```text
-AI-assisted execution > Independent conceptual ownership
+AI writes faster -> user understands the critical risks -> verification catches failures -> project reliability becomes judgeable.
 ```
 
-So the immediate work is not to open more projects. The immediate work is to turn existing projects into evidence that can survive four checks:
+## Criteria v0.2
 
-- Artifact: something exists in code/docs/demo form.
-- Oral defense: you can explain it without hiding behind AI.
-- Debug trial: you can reason when it breaks.
-- External validation: someone outside the loop reacts, uses, pays, or gives signal.
+### C1. Keep The Repository Focused On CS Learning
 
-## Criteria v0.1
-
-The program is successful only if these criteria are checked against real evidence.
-
-Criteria v0.1 is active by default until the user explicitly changes it.
-
-### C1. Assessment Artifacts Exist And Stay Current
-
-Evidence:
-
-- `KNOWLEDGE_MAP.md` exists and maps the CS/AI territory.
-- `ASSESSMENT.md` exists and records the two-mode scorecard.
-- `GOAL.md` exists and defines the active Goal-Driven contract.
+The top-level docs should describe `CS4LLM` as a CS catch-up and systems-learning workspace.
 
 Verification:
 
 ```bash
-test -f KNOWLEDGE_MAP.md
-test -f ASSESSMENT.md
-test -f GOAL.md
+rg -n "CS fundamentals|CS catch-up|engineer / architect|systems" README.md GOAL.md KNOWLEDGE_MAP.md ASSESSMENT.md
 ```
 
-### C2. Every Work Cycle Has One Explicit Target
+### C2. Separate Personal Strategy From CS4LLM
+
+Founder / VC / personal five-year planning should not be the active goal of this repo.
+
+Verification:
+
+```bash
+rg -n "founder|VC|operator-investor|five-year" GOAL.md ASSESSMENT.md
+```
+
+Allowed mentions:
+
+- A short boundary note saying that those topics live in `TODO`.
+- Historical references in archived material.
+
+### C3. Every CS Review Cycle Has One Concrete Target
 
 Each cycle must name exactly one target:
 
 ```text
 Target:
 Why now:
-Criteria:
+Concepts:
+Reliability risk:
 Verification:
 Stop condition:
 ```
 
-Good target examples:
+Good examples:
 
 - MapReduce review
 - xv6 syscall/trap review
 - BusTub Buffer Pool review
 - clox VM review
 - TCP reliable stream toy demo
-- Aporia 5-minute playtest
+- Raft leader election review
 
-Bad target examples:
+Bad examples:
 
-- Become stronger at CS
-- Think through founder route
-- Improve product sense
-- Study AI Infra broadly
+- Become good at CS
+- Study all networking
+- Become architect-level
+- Improve coding fundamentals broadly
 
-Verification:
+### C4. A Module Is Done Only With Four Evidence Types
 
-- The cycle has a written target block.
-- The target has at least 3 criteria.
-- At least 2 criteria are artifact/command/test based.
+A CS module is reviewed when it has:
 
-### C3. CS Module Completion Requires Four Evidence Types
+1. Human explanation: what problem it solves.
+2. Code path: which files/functions implement it.
+3. Failure mode: how it breaks.
+4. Verification: test, command, toy demo, or inspected output.
 
-A CS module is not considered reviewed until it has:
+### C5. Scores Move Only When Evidence Changes
 
-1. A one-page human explanation.
-2. A code-path map or file-path walkthrough.
-3. One failure/debug scenario.
-4. One tiny experiment, test, or command output.
-
-Verification:
-
-- A review note exists for the module.
-- The note includes all four sections.
-- The command/test/experiment can be rerun or inspected.
-
-Initial module queue:
-
-```text
-1. MapReduce
-2. xv6 syscall/trap
-3. BusTub Buffer Pool
-4. clox VM
-5. TCP reliable stream
-6. Raft leader election
-7. Raft log replication
-8. KV request path
-```
-
-### C4. Scores Can Only Move When Evidence Changes
-
-No score in `ASSESSMENT.md` should be raised because of motivation, confidence, or vibes.
+Scores in `ASSESSMENT.md` should not move because of motivation or confidence.
 
 Allowed score-change evidence:
 
-- Passing tests or demos.
-- Written module review.
-- Successful oral defense transcript or summary.
-- Debug trial result.
-- External user/customer/investor signal.
+- A review note.
+- A passed test/demo.
+- A debug trial.
+- A successful oral defense summary.
+- A project patch that adds reliability checks.
 
-Verification:
+### C6. Agent Collaboration Must Preserve User Judgment
 
-- Any score update must include a short evidence note.
-- If evidence is missing, keep the score unchanged.
+Agents may generate code, docs, tests, summaries, and review notes.
 
-### C5. Founder Loop Requires External Action
+The user must still own:
 
-Founder progress is not measured by planning. It is measured by contact with reality.
+- Main invariant.
+- Main failure mode.
+- What verification actually proves.
+- Whether a design is reliable enough.
 
-Minimum 12-week evidence:
+The master agent must verify outputs against criteria instead of accepting worker self-report.
 
-- 10 external touches.
-- 3 deep conversations.
-- 1 offer, price test, or explicit ask.
-- 1 written case note or playtest report.
-
-Verification:
-
-- Each external touch has date, person/type, ask, response, and next step.
-- The offer/price test records what was offered and what happened.
-
-### C6. Master Verification Beats Worker Self-Report
-
-When subagents or AI workers are used:
-
-- Workers may explore, implement, summarize, or draft.
-- The master must verify against criteria.
-- "Done" is never accepted from narrative self-report alone.
-
-Verification:
-
-- The master checks files, commands, tests, diffs, screenshots, transcripts, or written artifacts.
-- Failed criteria are restated before restart.
-
-## Execution Loop
-
-Each loop follows this shape:
+## First Target
 
 ```text
-1. Normalize the target.
-2. Freeze criteria.
-3. Delegate or execute.
-4. Verify against evidence.
-5. Update score/artifacts only if criteria pass.
-6. If criteria fail, restart with the exact remaining gap.
+Target: MapReduce review
+Why now: It is the gentlest bridge from ordinary task dispatch to distributed systems.
+Concepts: Coordinator, Worker, Task, Map, Reduce, retry, intermediate files.
+Reliability risk: tasks can be lost, duplicated, or reduced before all map outputs exist.
+Verification: inspect src/mr, run or inspect a MapReduce test/demo, produce one review note.
+Stop condition: user can explain normal flow and worker-failure flow in plain language.
 ```
 
-## Master / Worker Roles
+## Operating Rule
 
-Master:
+When the work starts to feel abstract or heavy, shrink the cycle.
 
-- Holds the goal and criteria steady.
-- Prevents vague expansion.
-- Verifies evidence.
-- Decides whether to continue, restart, or stop.
-
-Worker:
-
-- Reads code/docs.
-- Produces review notes, patches, experiments, or tests.
-- Reports evidence and gaps.
-
-User:
-
-- Owns the final learning.
-- Attempts oral defense and explanations.
-- Chooses whether to accept criteria changes.
-- Performs external founder-loop actions when needed.
-
-## First Concrete Target
-
-Target:
+Prefer:
 
 ```text
-MapReduce review
+one module -> one risk -> one explanation -> one verification
 ```
 
-Why now:
+Avoid:
 
 ```text
-It is the gentlest entry point into distributed systems and already exists in the 6.5840 repo.
+one life plan -> all CS -> all reliability -> all career strategy
 ```
-
-Criteria:
-
-1. Explain Coordinator, Worker, Task, Map, Reduce, retry in human language.
-2. Walk through the relevant files in `09-MIT-6.5840-Distributed-Systems/src/mr`.
-3. Describe one normal flow and one worker-failure flow.
-4. Run or inspect one command/test/demo tied to MapReduce.
-5. Produce a one-page review note.
-
-Verification:
-
-- The review note exists.
-- The file walkthrough names concrete files/functions.
-- The command/test output is recorded.
-- The user can answer five oral-defense questions without reading a generated explanation.
-
-## Criteria Change Rule
-
-Criteria may change, but only before a cycle starts or after a failed verification.
-
-Do not change criteria mid-cycle just because the work became uncomfortable.
-
-## Prompt-To-Artifact Checklist
-
-| Prompt Requirement | Artifact / Evidence | Status |
-| --- | --- | --- |
-| Build a knowledge map for the CS/AI learning route | `KNOWLEDGE_MAP.md` | done |
-| Record a capability assessment with two-mode scoring | `ASSESSMENT.md` | done |
-| Turn the five-year ladder into a near-term measurable contract | `GOAL.md` current goal and Criteria v0.1 | done |
-| Keep the five-year ladder visible without making it the direct verifier | `GOAL.md` north star and 12-week goal separation | done |
-| Define criteria even though they were initially unclear | `GOAL.md` C1-C6 | done |
-| Make criteria evidence-based, not subjective | C1 command checks, C2 target blocks, C3 review evidence, C4 score-change evidence, C5 external-action evidence, C6 master verification | done |
-| Provide the first concrete execution target | `GOAL.md` MapReduce review target | done |
-| Wire new artifacts into the repo entry points | `README.md` Entry Points | done |
 
 ## Current Status
 
 ```text
 Status: active
-Next: run the first cycle, MapReduce review, using Criteria v0.1
+Next: run the first cycle, MapReduce review.
 ```
