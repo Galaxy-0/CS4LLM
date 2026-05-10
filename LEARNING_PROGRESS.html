@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS4LLM Learning Progress</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #eef3f6;
+      --panel: #ffffff;
+      --soft: #f6f8fb;
+      --ink: #17212b;
+      --muted: #607080;
+      --line: #d8e1e8;
+      --blue: #2f6fbd;
+      --blue-soft: #dcecff;
+      --green: #287a58;
+      --green-soft: #daf2e7;
+      --amber: #b66a12;
+      --amber-soft: #fff0d4;
+      --red: #b24a4a;
+      --red-soft: #f8dddd;
+      --violet: #6656a8;
+      --violet-soft: #e8e3ff;
+      --shadow: 0 14px 32px rgba(23, 33, 43, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+      letter-spacing: 0;
+    }
+
+    button,
+    select {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1360px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0;
+    }
+
+    header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+    }
+
+    .sub {
+      max-width: 880px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .panel-head h2 {
+      font-size: 18px;
+    }
+
+    .panel-body {
+      padding: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .badge.current {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: #9dd8bf;
+    }
+
+    .map {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .layer {
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      min-height: 138px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      position: relative;
+    }
+
+    .layer.active {
+      background: var(--green-soft);
+      border-color: #94d2b7;
+    }
+
+    .layer.preview {
+      background: var(--amber-soft);
+      border-color: #e3bc76;
+    }
+
+    .layer-index {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-weight: 800;
+    }
+
+    .layer-title {
+      font-weight: 800;
+    }
+
+    .layer-text {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      min-height: 92px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 24px;
+      font-weight: 850;
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    select {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 8px 12px;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .concept-map {
+      position: relative;
+      min-height: 560px;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fafc 100%);
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 560px;
+    }
+
+    .edge {
+      stroke: #c2ced9;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    .node circle {
+      stroke-width: 3;
+      transition: fill 160ms ease, stroke 160ms ease, stroke-width 160ms ease;
+    }
+
+    .node text {
+      font-size: 13px;
+      font-weight: 800;
+      fill: var(--ink);
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+    }
+
+    .node.done circle {
+      fill: var(--blue-soft);
+      stroke: var(--blue);
+    }
+
+    .node.partial circle {
+      fill: var(--amber-soft);
+      stroke: var(--amber);
+    }
+
+    .node.next circle {
+      fill: var(--green-soft);
+      stroke: var(--green);
+      stroke-width: 5;
+    }
+
+    .node.later circle {
+      fill: #fff;
+      stroke: #aab8c6;
+    }
+
+    .node.selected circle {
+      stroke: var(--violet);
+      stroke-width: 6;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 12px 16px 16px;
+      border-top: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid;
+    }
+
+    .dot.done {
+      background: var(--blue-soft);
+      border-color: var(--blue);
+    }
+
+    .dot.partial {
+      background: var(--amber-soft);
+      border-color: var(--amber);
+    }
+
+    .dot.next {
+      background: var(--green-soft);
+      border-color: var(--green);
+    }
+
+    .dot.later {
+      background: #fff;
+      border-color: #aab8c6;
+    }
+
+    .detail {
+      display: grid;
+      gap: 12px;
+    }
+
+    .detail-title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .detail-title h3 {
+      font-size: 22px;
+    }
+
+    .level-bar {
+      height: 12px;
+      border-radius: 999px;
+      background: #e7edf2;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .level-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--amber), var(--green));
+      transition: width 180ms ease;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .detail-box {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      min-height: 92px;
+    }
+
+    .box-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .box-text {
+      font-size: 14px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .concept-card {
+      display: grid;
+      gap: 9px;
+      min-height: 156px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+
+    .concept-card:hover {
+      border-color: #aebdcc;
+    }
+
+    .concept-card.active {
+      border-color: var(--violet);
+      box-shadow: 0 0 0 3px var(--violet-soft), var(--shadow);
+    }
+
+    .card-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .concept-name {
+      font-weight: 850;
+    }
+
+    .level-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      min-height: 24px;
+      padding: 3px 7px;
+      border-radius: 6px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .concept-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .next-panel {
+      margin-top: 14px;
+    }
+
+    .next-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .next-item {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+    }
+
+    .next-item strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .next-item span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1080px) {
+      .top-grid,
+      .content-grid,
+      .cards,
+      .next-list {
+        grid-template-columns: 1fr;
+      }
+
+      .map {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .detail-grid,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <h1>CS4LLM Learning Progress</h1>
+      <p class="sub">当前知识结构快照。用途是让未来的我、你、或其他 agent 立刻看懂：现在站在哪，哪些概念已经打通，哪些只是概念层，下一步该补什么。</p>
+    </header>
+
+    <section class="top-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>CS / AI 工业研究型本科地图</h2>
+          <span class="badge current">Current: Layer 0</span>
+        </div>
+        <div class="panel-body">
+          <div class="map" id="bigMap"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Snapshot</h2>
+          <span class="badge">2026-05-11</span>
+        </div>
+        <div class="panel-body">
+          <div class="summary-grid">
+            <div class="metric">
+              <div class="metric-label">Current coordinate</div>
+              <div class="metric-value">Layer 0</div>
+              <div class="metric-note">Math + programming + data structures</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Current focus</div>
+              <div class="metric-value">B Layer</div>
+              <div class="metric-note">CS discrete layer + modeling</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Strongest new handle</div>
+              <div class="metric-value">Modeling</div>
+              <div class="metric-note">state / invariant / check</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Next</div>
+              <div class="metric-value">Practice</div>
+              <div class="metric-note">recursion, induction, invariant tests</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <select id="filter">
+        <option value="all">All concepts</option>
+        <option value="done">Done / passed for now</option>
+        <option value="partial">Partial / concept-only</option>
+        <option value="next">Next focus</option>
+        <option value="later">Later</option>
+      </select>
+      <span class="badge" id="countBadge"></span>
+      <span class="badge">Level scale: 0 heard -> 6 design tradeoff</span>
+    </div>
+
+    <section class="content-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Concept Structure</h2>
+          <span class="badge">click node</span>
+        </div>
+        <div class="concept-map">
+          <svg id="conceptSvg" viewBox="0 0 760 560" role="img" aria-label="Current concept structure map"></svg>
+        </div>
+        <div class="legend">
+          <span><i class="dot done"></i>本轮可先放过</span>
+          <span><i class="dot partial"></i>懂概念，缺练习</span>
+          <span><i class="dot next"></i>下一步</span>
+          <span><i class="dot later"></i>以后补</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Selected Concept</h2>
+          <span class="badge" id="selectedStatus"></span>
+        </div>
+        <div class="panel-body detail" id="detail"></div>
+      </div>
+    </section>
+
+    <section class="cards" id="cards"></section>
+
+    <section class="panel next-panel">
+      <div class="panel-head">
+        <h2>Recommended Next Steps</h2>
+        <span class="badge">small, testable</span>
+      </div>
+      <div class="panel-body">
+        <div class="next-list">
+          <div class="next-item">
+            <strong>1. Recursion trace</strong>
+            <span>用 tree walk 手动写出 call stack，标 base case / recursive step。</span>
+          </div>
+          <div class="next-item">
+            <strong>2. Induction intuition</strong>
+            <span>用 factorial 或 tree traversal 解释为什么递归正确。</span>
+          </div>
+          <div class="next-item">
+            <strong>3. Invariant tests</strong>
+            <span>给 sorted list / queue 写 State-Invariant-Breaker-Check 和 assert。</span>
+          </div>
+          <div class="next-item">
+            <strong>4. State machine design</strong>
+            <span>设计一个 upload job 或 order 状态机，区分 status 和 fields。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const bigMap = [
+      { index: 0, title: "预备层", text: "数学 / 编程 / 数据结构", tone: "active" },
+      { index: 1, title: "四大主干", text: "算法 / OS / 体系结构 / 编译器", tone: "preview" },
+      { index: 2, title: "系统工程", text: "网络 / 数据库 / 分布式 / 存储性能", tone: "later" },
+      { index: 3, title: "AI/ML", text: "ML -> DL -> Transformer -> Agent", tone: "later" },
+      { index: 4, title: "工业实践", text: "项目 / research / debug / deploy", tone: "later" }
+    ];
+
+    const concepts = [
+      {
+        id: "bplus",
+        name: "B+ Tree",
+        group: "preview",
+        status: "done",
+        level: 2,
+        x: 120,
+        y: 90,
+        evidence: "能用“数据库有序多层目录”解释；能说明比二叉树更适合 page / disk IO；知道叶子链表服务范围查询。",
+        next: "以后进入数据库时补 page、split、merge、separator key、B+ Tree invariants。",
+        use: "数据库索引、范围查询、BusTub B+ Tree。",
+        risk: "目前是人话模型，不是实现 ownership。"
+      },
+      {
+        id: "graph",
+        name: "Graph",
+        group: "discrete",
+        status: "partial",
+        level: 2,
+        x: 310,
+        y: 70,
+        evidence: "理解点 + 边；知道 graph 表示关系、依赖、路径、拓扑。",
+        next: "用 adjacency list 写一个小 graph，再跑 BFS/DFS。",
+        use: "网络、依赖分析、BFS/DFS、状态转换。",
+        risk: "还需要从概念转到代码表示。"
+      },
+      {
+        id: "tree",
+        name: "Tree",
+        group: "discrete",
+        status: "partial",
+        level: 2,
+        x: 500,
+        y: 70,
+        evidence: "知道 tree 是层级结构；和 B+ Tree、AST、文件树、JSON 有连接。",
+        next: "补 preorder / postorder 和递归遍历。",
+        use: "AST、文件系统、B+ Tree、DOM、JSON。",
+        risk: "遍历和递归实践不足。"
+      },
+      {
+        id: "bfsdfs",
+        name: "BFS / DFS",
+        group: "discrete",
+        status: "done",
+        level: 2,
+        x: 310,
+        y: 190,
+        evidence: "理解 BFS 一层层扩散，用 queue；DFS 一条路到底，用 recursion/call stack 或显式 stack；已创建动画页面。",
+        next: "补 BFS shortest path、DFS cycle detection、拓扑排序。",
+        use: "图遍历、路径搜索、文件树、依赖排序。",
+        risk: "代码熟练度还没验证。"
+      },
+      {
+        id: "callstack",
+        name: "Call Stack",
+        group: "programming",
+        status: "done",
+        level: 2,
+        x: 500,
+        y: 190,
+        evidence: "理解递归 DFS 不是没有栈，而是使用语言运行时 call stack。",
+        next: "手动 trace 一个递归 tree walk 的 push/pop。",
+        use: "递归、debug stack trace、DFS、函数调用。",
+        risk: "需要通过 trace 变成肌肉记忆。"
+      },
+      {
+        id: "complexity",
+        name: "Complexity",
+        group: "concrete",
+        status: "partial",
+        level: 1.5,
+        x: 120,
+        y: 250,
+        evidence: "知道 O(1), O(n), O(n^2), O(log n), O(V+E) 的人话含义；能说复杂度是性能风险雷达。",
+        next: "进入 sums / recurrences / asymptotics mini-track。",
+        use: "判断代码数据变大是否会炸，审查 agent 代码性能风险。",
+        risk: "还不能稳定分析真实代码段。"
+      },
+      {
+        id: "profiling",
+        name: "Profiling",
+        group: "engineering",
+        status: "later",
+        level: 1,
+        x: 120,
+        y: 390,
+        evidence: "知道 profiling 是程序体检，用来找时间/内存花在哪；暂时跳过。",
+        next: "等有真实慢脚本时用 cProfile / py-spy / scalene。",
+        use: "定位性能热点、验证优化效果。",
+        risk: "不是当前主线。"
+      },
+      {
+        id: "invariant",
+        name: "Invariant",
+        group: "modeling",
+        status: "partial",
+        level: 2,
+        x: 500,
+        y: 320,
+        evidence: "理解不变量是系统变化中必须保持为真的规则；已学习 State / Invariant / Breaker / Check。",
+        next: "写 2-3 个 invariant check 和 assert 测试。",
+        use: "数据结构正确性、系统可靠性、agent patch review。",
+        risk: "实践还薄，容易停在概念层。"
+      },
+      {
+        id: "testing",
+        name: "Testing / Assert",
+        group: "engineering",
+        status: "partial",
+        level: 2,
+        x: 650,
+        y: 420,
+        evidence: "理解测试是自己定义“什么叫对”，用 assert 自动检查；懂 is_sorted 返回 False 后 assert 失败机制。",
+        next: "用 pytest 写 sorted list / queue 的 invariant tests。",
+        use: "自动验证、回归测试、约束 agent 输出。",
+        risk: "还没形成测试设计习惯。"
+      },
+      {
+        id: "statemachine",
+        name: "State Machine",
+        group: "modeling",
+        status: "done",
+        level: 2,
+        x: 310,
+        y: 430,
+        evidence: "理解状态、事件、转换、非法转换、终态；理解“阶段进 status，属性拆字段”避免状态爆炸。",
+        next: "设计 upload job 或 order 状态机并写非法转换测试。",
+        use: "业务建模、UI、任务调度、TCP/Raft、agent workflow。",
+        risk: "需要拿真实业务对象练设计。"
+      },
+      {
+        id: "recursion",
+        name: "Recursion",
+        group: "discrete",
+        status: "next",
+        level: 1,
+        x: 500,
+        y: 520,
+        evidence: "刚开头：知道 base case / recursive step。",
+        next: "用 factorial、tree walk、DFS 手动 trace call stack。",
+        use: "树遍历、parser、DFS、divide-and-conquer、DP。",
+        risk: "下一块主线。"
+      },
+      {
+        id: "induction",
+        name: "Induction",
+        group: "discrete",
+        status: "next",
+        level: 1,
+        x: 650,
+        y: 520,
+        evidence: "刚开头：知道归纳是递归正确性的证明思路。",
+        next: "用 base + step 解释 factorial 和 tree traversal 为什么对。",
+        use: "算法正确性、循环不变量、递归证明。",
+        risk: "下一块主线。"
+      }
+    ];
+
+    const edges = [
+      ["graph", "bfsdfs"],
+      ["tree", "bfsdfs"],
+      ["tree", "callstack"],
+      ["bfsdfs", "callstack"],
+      ["bfsdfs", "complexity"],
+      ["complexity", "profiling"],
+      ["graph", "statemachine"],
+      ["statemachine", "invariant"],
+      ["invariant", "testing"],
+      ["callstack", "recursion"],
+      ["recursion", "induction"],
+      ["induction", "invariant"],
+      ["bplus", "tree"],
+      ["bplus", "invariant"]
+    ];
+
+    let selectedId = "statemachine";
+    let filter = "all";
+
+    const $ = (id) => document.getElementById(id);
+
+    function renderBigMap() {
+      $("bigMap").innerHTML = bigMap.map((layer) => `
+        <div class="layer ${layer.tone}">
+          <div class="layer-index">${layer.index}</div>
+          <div class="layer-title">${layer.title}</div>
+          <div class="layer-text">${layer.text}</div>
+        </div>
+      `).join("");
+    }
+
+    function visibleConcepts() {
+      return concepts.filter((concept) => filter === "all" || concept.status === filter);
+    }
+
+    function renderGraph() {
+      const visible = new Set(visibleConcepts().map((c) => c.id));
+      const svg = $("conceptSvg");
+      const edgeEls = edges
+        .filter(([a, b]) => visible.has(a) && visible.has(b))
+        .map(([a, b]) => {
+          const from = concepts.find((c) => c.id === a);
+          const to = concepts.find((c) => c.id === b);
+          return `<line class="edge" x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}"></line>`;
+        });
+
+      const nodeEls = visibleConcepts().map((concept) => {
+        const selected = concept.id === selectedId ? " selected" : "";
+        const radius = concept.name.length > 11 ? 47 : 41;
+        return `
+          <g class="node ${concept.status}${selected}" data-id="${concept.id}" transform="translate(${concept.x}, ${concept.y})">
+            <circle r="${radius}"></circle>
+            <text>${escapeHtml(shortName(concept.name))}</text>
+          </g>
+        `;
+      });
+
+      svg.innerHTML = `${edgeEls.join("")}${nodeEls.join("")}`;
+      svg.querySelectorAll(".node").forEach((node) => {
+        node.addEventListener("click", () => {
+          selectedId = node.dataset.id;
+          render();
+        });
+      });
+    }
+
+    function shortName(name) {
+      return name.length > 12 ? name.replace(" / ", "/") : name;
+    }
+
+    function renderCards() {
+      const items = visibleConcepts();
+      $("countBadge").textContent = `${items.length} visible`;
+      $("cards").innerHTML = items.map((concept) => `
+        <article class="concept-card ${concept.id === selectedId ? "active" : ""}" data-id="${concept.id}">
+          <div class="card-row">
+            <div class="concept-name">${escapeHtml(concept.name)}</div>
+            <span class="level-pill">L${concept.level}</span>
+          </div>
+          <span class="badge ${concept.status === "next" ? "current" : ""}">${labelStatus(concept.status)}</span>
+          <p>${escapeHtml(concept.evidence)}</p>
+        </article>
+      `).join("");
+      document.querySelectorAll(".concept-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          selectedId = card.dataset.id;
+          render();
+          window.scrollTo({ top: 240, behavior: "smooth" });
+        });
+      });
+    }
+
+    function renderDetail() {
+      const concept = concepts.find((c) => c.id === selectedId) || visibleConcepts()[0] || concepts[0];
+      selectedId = concept.id;
+      $("selectedStatus").textContent = labelStatus(concept.status);
+      const pct = Math.round((Number(concept.level) / 6) * 100);
+      $("detail").innerHTML = `
+        <div class="detail-title">
+          <h3>${escapeHtml(concept.name)}</h3>
+          <span class="level-pill">Level ${concept.level} / 6</span>
+        </div>
+        <div class="level-bar"><div class="level-fill" style="width: ${pct}%"></div></div>
+        <div class="detail-grid">
+          <div class="detail-box">
+            <div class="box-label">Evidence</div>
+            <div class="box-text">${escapeHtml(concept.evidence)}</div>
+          </div>
+          <div class="detail-box">
+            <div class="box-label">Next</div>
+            <div class="box-text">${escapeHtml(concept.next)}</div>
+          </div>
+          <div class="detail-box">
+            <div class="box-label">Use</div>
+            <div class="box-text">${escapeHtml(concept.use)}</div>
+          </div>
+          <div class="detail-box">
+            <div class="box-label">Risk</div>
+            <div class="box-text">${escapeHtml(concept.risk)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function labelStatus(status) {
+      return {
+        done: "passed for now",
+        partial: "partial",
+        next: "next focus",
+        later: "later"
+      }[status] || status;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function render() {
+      renderBigMap();
+      renderGraph();
+      renderCards();
+      renderDetail();
+    }
+
+    $("filter").addEventListener("change", (event) => {
+      filter = event.target.value;
+      if (!visibleConcepts().some((c) => c.id === selectedId)) {
+        selectedId = (visibleConcepts()[0] || concepts[0]).id;
+      }
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
