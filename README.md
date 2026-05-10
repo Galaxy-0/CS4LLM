@@ -13,6 +13,9 @@ This top-level repository is a workspace manager, not a replacement for the chil
 ## Entry Points
 
 - [ROADMAP.md](./ROADMAP.md): high-level learning path
+- [KNOWLEDGE_MAP.md](./KNOWLEDGE_MAP.md): CS/AI knowledge map and review guide
+- [ASSESSMENT.md](./ASSESSMENT.md): capability scorecard and five-year ladder
+- [GOAL.md](./GOAL.md): goal-driven operating contract and criteria
 - [00_CS_Undergrad_Standard.md](./00_CS_Undergrad_Standard.md): capability baseline
 - [WORKSPACE.md](./WORKSPACE.md): project map, workflow, and common commands
 - `bash scripts/repo-status.sh`: one-shot status check for the workspace and child repositories
