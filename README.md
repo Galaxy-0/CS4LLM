@@ -15,6 +15,7 @@ This top-level repository is a workspace manager, not a replacement for the chil
 - [ROADMAP.md](./ROADMAP.md): high-level learning path
 - [LEARNING_ROUTE.md](./LEARNING_ROUTE.md): active route through the CS / AI industrial-research undergrad map
 - [LEARNING_PROGRESS.html](./LEARNING_PROGRESS.html): visual current knowledge structure and progress dashboard
+- [CS_CORE_TREE.md](./CS_CORE_TREE.md): Layer 1 deep tree for Algorithms, OS, Architecture, and Compilers
 - [MATH_MAP.md](./MATH_MAP.md): CS/AI math concept map, including Concrete Mathematics placement
 - [MATH_ROUTE.md](./MATH_ROUTE.md): Layer 0 math route, scope, utility, and first-pass plan
 - [KNOWLEDGE_MAP.md](./KNOWLEDGE_MAP.md): CS/AI knowledge map and review guide

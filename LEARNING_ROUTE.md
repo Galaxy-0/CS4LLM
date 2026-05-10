@@ -18,6 +18,8 @@ Current coordinate: Layer 0 起点
 
 这不是坏位置。它只是说明接下来要先补“能看懂代码、会用工具、知道基本数学和数据结构”的地基，然后再正式进入 CS 四大主干。
 
+Layer 1 的详细知识树已经单独展开在 [CS_CORE_TREE.md](./CS_CORE_TREE.md)。它是后续索引，不改变当前第一阶段仍然先补 Layer 0 的路线。
+
 ## Baseline
 
 当前估计：
