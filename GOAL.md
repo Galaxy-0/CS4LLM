@@ -31,14 +31,14 @@ Those belong in:
 
 ## Current Goal
 
-Build a fast CS catch-up system that converts existing project artifacts into usable engineering and architecture judgment.
+Build a fast route through the CS / AI industrial-research undergrad map, starting honestly at Layer 0.
 
 The goal is not to return to pre-AI "hand-code everything" learning.
 
 The goal is:
 
 ```text
-AI writes faster -> user understands the critical risks -> verification catches failures -> project reliability becomes judgeable.
+AI accelerates the route -> Layer 0 becomes usable -> core CS becomes understandable -> project reliability becomes judgeable.
 ```
 
 ## Criteria v0.2
@@ -83,12 +83,12 @@ Stop condition:
 
 Good examples:
 
-- MapReduce review
-- xv6 syscall/trap review
-- BusTub Buffer Pool review
-- clox VM review
-- TCP reliable stream toy demo
-- Raft leader election review
+- Python project reading
+- Git / terminal workflow
+- Data structure mini-example
+- Complexity warmup
+- CS math handle
+- Debug / verification mini-experiment
 
 Bad examples:
 
@@ -134,12 +134,12 @@ The master agent must verify outputs against criteria instead of accepting worke
 ## First Target
 
 ```text
-Target: MapReduce review
-Why now: It is the gentlest bridge from ordinary task dispatch to distributed systems.
-Concepts: Coordinator, Worker, Task, Map, Reduce, retry, intermediate files.
-Reliability risk: tasks can be lost, duplicated, or reduced before all map outputs exist.
-Verification: inspect src/mr, run or inspect a MapReduce test/demo, produce one review note.
-Stop condition: user can explain normal flow and worker-failure flow in plain language.
+Target: Layer 0 / Python + terminal + Git survival
+Why now: The current coordinate is the start of the CS / AI undergrad map.
+Concepts: directory, file, entry point, function, data flow, git status, git diff.
+Reliability risk: agent-generated project work stays opaque if the user cannot inspect code, changes, and run paths.
+Verification: pick one small Python project, find the entry point, run it, inspect one data flow, and write one note.
+Stop condition: user can explain what command ran, which file started, what data moved, and what changed in Git.
 ```
 
 ## Operating Rule
@@ -149,18 +149,18 @@ When the work starts to feel abstract or heavy, shrink the cycle.
 Prefer:
 
 ```text
-one module -> one risk -> one explanation -> one verification
+one layer -> one concept -> one example -> one verification
 ```
 
 Avoid:
 
 ```text
-one life plan -> all CS -> all reliability -> all career strategy
+one life plan -> all CS -> all systems -> all AI -> all career strategy
 ```
 
 ## Current Status
 
 ```text
 Status: active
-Next: run the first cycle, MapReduce review.
+Next: run the first Layer 0 cycle, Python project reading + Git/terminal survival.
 ```

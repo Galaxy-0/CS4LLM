@@ -45,6 +45,21 @@
 └───────────────────────────────────────────────────────────┘
 ```
 
+## Current Position
+
+当前坐标先诚实标在：
+
+```text
+Layer 0 起点：预备层 / 数学 + 编程 + 数据结构
+```
+
+这表示：
+
+- Python、Git、terminal 有一点基础，但还没有稳定肌肉记忆。
+- AI 协作和项目推进强于独立 CS ownership。
+- OS、数据库、网络、分布式、编译器、AI/ML 都先按后续层级推进，不抢跑。
+- 当前主线看 [LEARNING_ROUTE.md](./LEARNING_ROUTE.md)：先补 Layer 0，再进入四大硬核主干。
+
 ## Repository Coverage
 
 | Map Area | Repo Path | Current Role | Human Translation |
@@ -72,7 +87,9 @@
 
 目标不是所有模块都到 5。近期目标是：核心模块先从 1 推到 2。
 
-## Current Learning Coordinates
+## Later Project Coordinates
+
+These project coordinates are not the active starting point. They become useful after Layer 0 is stable enough to read code and follow small system flows.
 
 | Area | Current Coordinate | Next Useful Step |
 | --- | --- | --- |
@@ -86,7 +103,9 @@
 | CS144 / Networking | skeleton 尚未加入 | 下一块大空白，适合作为后续新主线 |
 | AI/ML/Agent | 尚未纳入主线仓库 | 仅保留为未来应用方向；本仓库先补 CS 系统骨架 |
 
-## Six-Point Review Path
+## Later Six-Point Review Path
+
+Use this after Layer 0, not as the first month mainline.
 
 接下来先不要开太多新门。按这六个点复盘，可以把 CS 骨架慢慢串起来。
 

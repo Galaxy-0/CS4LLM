@@ -43,13 +43,14 @@ Every capability should be scored in two modes:
 
 | Layer | Current Estimate | Notes |
 | --- | ---: | --- |
-| AI-assisted CS/project execution | 65-75 | Can organize repos, run tests, split commits, use agents, and produce artifacts |
-| Independent CS conceptual ownership | 30-45 | Many systems projects exist, but oral explanation/debug ownership is still thin |
-| Engineering reliability judgment | 35-50 | Starting to form through tests/status scripts, but not yet a default instinct |
-| Architecture judgment with agents | 40-55 | Good high-level taste, still needs stronger invariants/failure-mode grounding |
-| Traditional from-scratch implementation | 25-40 | Not the primary goal, but toy reimplementation is still useful for key concepts |
+| AI-assisted CS/project execution | 50-65 | Can use agents to push projects farther than the independent foundation currently supports |
+| Layer 0 ownership | 15-30 | Python, Git, terminal, data structures, and CS math are still being stabilized |
+| Independent CS conceptual ownership | 5-20 | Current honest coordinate is the Layer 0 starting point |
+| Engineering reliability judgment | 10-25 | Testing/debug ideas are present, but not yet an independent habit |
+| Architecture judgment with agents | 30-45 | Can discuss direction with agents, but needs stronger foundations before judging systems deeply |
+| Traditional from-scratch implementation | 10-25 | Useful only in small toy exercises for now |
 
-## CS Module Scorecard
+## Layer Scorecard
 
 Scale:
 
@@ -62,20 +63,16 @@ Scale:
 5 = 能设计取舍
 ```
 
-| Module | Current Estimate | Near-Term Target | Why It Matters |
+| Layer / Module | Current Estimate | Near-Term Target | Why It Matters |
 | --- | ---: | ---: | --- |
-| MapReduce | 1 | 3 | Distributed task dispatch, retry, intermediate data |
-| xv6 syscall / trap | 1-2 | 3 | How programs cross into the OS |
-| BusTub Buffer Pool | 1-2 | 3 | Memory/disk boundary and database reliability |
-| B+ Tree | 1-2 | 3 | Ordered storage, page structure, index invariants |
-| clox VM | 2 | 3 | How source-level programs become runtime execution |
-| nanoc pipeline | 2 | 3 | Compiler stages: source -> AST -> typecheck -> IR -> assembly |
-| TCP reliable stream | 0-1 | 3 | Biggest missing systems area |
-| Raft leader election | 1 | 3 | How machines choose a coordinator |
-| Raft log replication | 1 | 3 | How machines agree on ordered operations |
-| KV request path | 1 | 3 | User request -> replicated state machine -> reply |
-| MVCC / transaction | 1 | 3 | Database correctness under concurrency |
-| Debug / performance basics | 1 | 3 | How to investigate failures without guessing |
+| Terminal / Git | 1 | 2-3 | Repo survival and daily learning workflow |
+| Python reading | 1 | 2-3 | Ability to read small projects and trace data flow |
+| Programming basics | 1 | 2-3 | Variables, functions, modules, errors, state |
+| Data structures | 0-1 | 2 | Needed before algorithms, databases, compilers, and systems |
+| Algorithms warmup | 0-1 | 2 | Complexity, recursion, BFS/DFS, basic problem-solving |
+| CS math handles | 0-1 | 2 | Discrete math, linear algebra, probability, calculus intuition |
+| Debug / verification basics | 1 | 2 | Ability to check claims instead of trusting generated output |
+| MapReduce / xv6 / BusTub / Raft / TCP / Compiler projects | 0-1 independent, higher with agent help | Later Layer 1-2 target | Existing artifacts are useful later, but not the current active sprint |
 
 ## What Engineer / Architect Level Means Here
 
@@ -107,7 +104,7 @@ No evidence, no score increase.
 
 ## Baseline Diagnostic
 
-Use [BASELINE_QUESTIONNAIRE.html](./BASELINE_QUESTIONNAIRE.html) for the fillable first-month diagnostic. The Markdown source version is [BASELINE_QUESTIONNAIRE.md](./BASELINE_QUESTIONNAIRE.md).
+Use [BASELINE_QUESTIONNAIRE.html](./BASELINE_QUESTIONNAIRE.html) only if a structured form is useful. The Markdown source version is [BASELINE_QUESTIONNAIRE.md](./BASELINE_QUESTIONNAIRE.md). The default path can also be direct Q&A with Codex.
 
 It measures five practical dimensions:
 
@@ -126,19 +123,18 @@ Pass B: AI-assisted, after Codex/repo help
 
 The gap between Pass A and Pass B is a useful signal. A large gap means the user has strong leverage with agents but still needs more internal ownership.
 
-## Current 8-Module Sprint
+## Current Layer 0 Sprint
 
-Do not open more tracks until these are reviewed at Level 2-3:
+Do not make systems projects the main sprint until Layer 0 is usable.
 
 ```text
-1. MapReduce
-2. xv6 syscall/trap
-3. BusTub Buffer Pool
-4. clox VM
-5. TCP reliable stream
-6. Raft leader election
-7. Raft log replication
-8. KV request path
+1. Terminal / Git survival
+2. Python project reading
+3. Programming basics
+4. Data structures
+5. Algorithms warmup
+6. CS math handles
+7. Debug / verification basics
 ```
 
 ## Recommended Cycle Shape
@@ -147,24 +143,24 @@ Each review cycle should stay small:
 
 ```text
 Target:
-Concept:
-Reliability risk:
-Files to inspect:
-Command/test/demo:
+Layer:
+Concept in human words:
+Tiny example:
+Code or command:
 One-page note:
-Oral-defense questions:
+What I can explain without Codex:
 ```
 
 Example:
 
 ```text
-Target: MapReduce
-Concept: Coordinator assigns map/reduce tasks to workers.
-Reliability risk: worker crashes can leave tasks stuck forever.
-Files to inspect: src/mr/coordinator.go, src/mr/worker.go, src/mr/rpc.go
-Command/test/demo: run or inspect test-mr.sh behavior
-One-page note: explain normal flow and retry flow
-Oral-defense questions: why reduce waits for all map tasks; how retry works
+Target: Python project reading
+Layer: 0
+Concept in human words: Find where a program starts and how data moves through functions.
+Tiny example: Trace one command or user action from entry point to output.
+Code or command: rg for main/if __name__, run the script, inspect one function.
+One-page note: entry point, key files, one data flow, still confusing.
+What I can explain without Codex: what input enters, what state changes, what output appears.
 ```
 
 ## Out-Of-Scope Redirect

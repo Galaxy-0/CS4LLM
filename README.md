@@ -1,6 +1,6 @@
 # CS4LLM
 
-Use LLM agents to speed-run systems-focused CS fundamentals while keeping each course project independently maintainable.
+Use LLM agents to move through a CS / AI industrial-research undergrad map while keeping each course project independently maintainable.
 
 ## Workspace Role
 
@@ -13,7 +13,7 @@ This top-level repository is a workspace manager, not a replacement for the chil
 ## Entry Points
 
 - [ROADMAP.md](./ROADMAP.md): high-level learning path
-- [LEARNING_ROUTE.md](./LEARNING_ROUTE.md): practical 1/3/6/12/24-month route from the current baseline
+- [LEARNING_ROUTE.md](./LEARNING_ROUTE.md): active route through the CS / AI industrial-research undergrad map
 - [KNOWLEDGE_MAP.md](./KNOWLEDGE_MAP.md): CS/AI knowledge map and review guide
 - [ASSESSMENT.md](./ASSESSMENT.md): CS capability scorecard for agent-assisted engineering judgment
 - [BASELINE_QUESTIONNAIRE.html](./BASELINE_QUESTIONNAIRE.html): fillable five-dimension diagnostic with local autosave and Markdown export

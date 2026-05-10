@@ -1,483 +1,428 @@
-# CS4LLM Learning Route
+# CS / AI Industrial Research Undergrad Route
 
-这份路线从 `KNOWLEDGE_MAP.md` 出发，但按当前真实起点重新排序。
-
-当前假设：
+这份路线严格跟随 `KNOWLEDGE_MAP.md` 里的大地图：
 
 ```text
-Python: 能看懂一点，复杂项目会懵
-Git / terminal: 懂一点，肌肉记忆不强
-CS systems: 大部分还没有心智模型
-ML / DB / 项目实践: 接触过一些，但 ownership 不稳
-AI collaboration: 明显强项，已经能靠 agent 推进项目
+0. 预备层：数学 + 编程 + 数据结构
+1. 四大硬核主干：算法 / 操作系统 / 体系结构 / 编译器
+2. 系统工程主干：网络 / 数据库 / 分布式系统 / 存储性能
+3. AI/ML Track：传统 ML -> 深度学习 -> Transformer -> LLM -> Agent
+4. 工业实践层：项目 / research / 开源 / benchmark / debug / 部署 / 协作
 ```
 
-所以这不是传统本科路线，也不是刷课路线。它的目标是：
+当前定位：
 
 ```text
-用 AI 协作提速，把已经被 agent 拔高的项目实践，压回自己的 CS 基础能力里。
+Current coordinate: Layer 0 起点
 ```
 
-## North Star
+这不是坏位置。它只是说明接下来要先补“能看懂代码、会用工具、知道基本数学和数据结构”的地基，然后再正式进入 CS 四大主干。
 
-一年内追求的不是“记完本科所有知识点”，而是：
+## Baseline
+
+当前估计：
+
+| Area | Current State | Route Meaning |
+| --- | --- | --- |
+| Python | 能看懂一点，复杂项目会懵 | 从代码阅读和小改开始 |
+| Git / terminal | 懂一点，但肌肉记忆不强 | 先练成日常工具 |
+| Programming basics | 有项目接触，但概念不稳 | 补变量、函数、数据流、模块、错误 |
+| Data structures | 零散 | 先掌握工程常用结构 |
+| Math | 大概率需要重建 | 只补 CS/AI 最常用部分 |
+| OS / DB / network / distributed / compiler | 基本在起点 | 先不硬啃实现，等 Layer 0 站稳 |
+| ML / AI | 听过或接触过一些 | 等数学和编程地基更稳后系统进入 |
+| AI collaboration | 明显强项 | 用来提速，但不替代 ownership |
+
+一句话：
 
 ```text
-看得懂项目 -> 讲得清系统 -> 找得到风险 -> 验证得了关键假设 -> 能和 agent 一起交付可靠东西
+项目实践被 AI 协作拔高了；现在要从 Layer 0 开始补独立 CS ownership。
 ```
 
-两套能力同时评分：
+## Operating Principle
 
-| Mode | Goal |
+每一层都按两个模式评分：
+
+| Mode | Meaning |
 | --- | --- |
-| AI-assisted execution | 能和 Codex/agents 配合推进复杂项目 |
-| Independent ownership | 不看答案时，能解释、debug、重写小版、判断风险 |
+| AI-assisted execution | 和 Codex/agents 配合时能不能推进 |
+| Independent ownership | 不看答案时能不能解释、debug、重写小版、判断风险 |
 
-短期重点是缩小二者差距。
-
-## The Map, Reordered
-
-基础地图仍然是：
+路线目标不是回到古法手敲一切，而是：
 
 ```text
-0. 编程 + 工具 + 数据结构
-1. 算法 / OS / 体系结构 / 编译器
-2. 网络 / 数据库 / 分布式 / 存储性能
-3. ML / DL / LLM / Agent
-4. 工业实践 / research / 开源 / 产品化
+AI 提速学习和实现
+自己掌握概念、代码路径、失败模式、验证边界
 ```
 
-但对当前阶段，实际学习顺序应该是：
-
-```text
-工具链 -> Python 代码阅读 -> 数据结构人话模型
--> 六个系统故事 -> 代码路径 -> 不变量/失败模式 -> 验证/debug
--> 再回头系统补 OS/DB/Network/Distributed/Compiler/ML
-```
-
-原因很简单：先有“看懂和追踪”的能力，后面所有 CS 课才不会变成名词轰炸。
-
-## Core Loop
-
-每次学习只走这个小循环：
-
-```text
-1. Story: 这个东西解决什么现实问题？
-2. Flow: 正常流程怎么走？
-3. Code: 仓库里哪几个文件/函数体现它？
-4. Risk: 什么必须永远为真？哪里会坏？
-5. Verify: 用什么命令、测试、日志、实验检查？
-6. Note: 写一页 ownership note。
-```
-
-不要一口吃完整门课。每次只拿下一个可以复述、可以验证的小块。
-
-## Month 1: Build Handles
+## Layer 0. 预备层：数学 + 编程 + 数据结构
 
 目标：
 
 ```text
-从“CS 黑箱 + agent 推项目”
-变成“能讲 6 个系统故事，并能在代码里找到一点抓手”
+从“靠 agent 推项目”
+变成“自己能读小项目、写小脚本、理解常见数据结构和 CS 数学语言”
 ```
 
-### Week 1. Python Reading + Git / Terminal
+### 0A. Tools And Repo Survival
 
-Focus:
-
-- 读懂小型 Python 项目的入口、函数、数据流。
-- 用 terminal 知道自己在哪、项目里有什么、改了什么。
-- 用 Git 查状态、看 diff、提交、看历史。
-
-Must know:
+Must own:
 
 ```text
 pwd / ls / cd / rg / cat / sed
 git status / git diff / git log / git add / git commit
 python file.py
-import / function / class / list / dict / exception / json
+README / tests / config / entrypoint / dependency file
 ```
 
-Practice:
+Exit criteria:
 
-- 找一个自己的小项目，回答：
+- 能说清自己在哪个目录。
+- 能找到一个项目的入口文件。
+- 能看出这次改了哪些文件。
+- 能提交一个小改动。
+- 能用 `rg` 找函数、类、配置、错误信息。
+
+### 0B. Programming Basics
+
+Primary language:
 
 ```text
-入口文件在哪？
-配置从哪来？
-主要数据结构是什么？
-一个用户操作会经过哪些函数？
-哪里可以加 print/log？
+Python first
+Go / C only as systems-course reading language
 ```
 
-Stop condition:
+Must own:
 
 ```text
-能打开一个小 Python 项目，讲清“入口 -> 数据 -> 函数 -> 输出”的粗路径。
+variable / type / function / class
+if / loop / exception
+list / dict / set / tuple
+module / import
+file / json / http request
+print log / breakpoint
 ```
 
-### Week 2. Data Structures + MapReduce Story
+Exit criteria:
 
-Focus:
+- 能读一个 200-500 行的小 Python 项目。
+- 能追一条输入到输出的数据流。
+- 能做一个不超过 30 行的小改动。
+- 能解释“这个函数拿什么输入、改什么状态、返回什么结果”。
 
-- 把常用数据结构翻成人话。
-- 用 MapReduce 建立“任务调度 / worker / retry”的第一个分布式直觉。
+### 0C. Data Structures
 
-Must know:
+先不刷竞赛题。先把结构和用途建起来。
+
+Must own:
+
+| Structure | Human Model | Why It Matters |
+| --- | --- | --- |
+| list / array | 一排格子 | 顺序数据、遍历、索引 |
+| dict / hash map | key -> value | 状态表、缓存、索引 |
+| set | 去重和 membership | 判断是否见过 |
+| stack | 后进先出 | 调用栈、解析、回溯 |
+| queue | 先进先出 | 任务队列、调度、BFS |
+| tree | 层级结构 | 文件树、AST、索引 |
+| graph | 点和边 | 网络、依赖、路径 |
+| heap / priority queue | 总能取最小/最大 | 调度、最短路、top-k |
+
+Exit criteria:
+
+- 能说出每个结构解决什么问题。
+- 能用 Python 写小例子。
+- 看到代码里用 `dict/list/queue` 时，能说它在存什么状态。
+
+### 0D. Algorithms Warmup
+
+先建立基本算法语言，不急着刷深题。
+
+Must own:
 
 ```text
-list: 一排东西
-dict/hash map: key -> value
-set: 去重和 membership
-queue: 排队任务
-stack: 后进先出
-tree: 层级结构
-graph: 关系网络
-
-MapReduce:
-Coordinator / Worker / Task / Map / Reduce / intermediate files / timeout / retry
+complexity: O(1), O(log n), O(n), O(n log n), O(n^2)
+search: linear search, binary search
+sorting: selection/merge/quick 的直觉
+recursion
+BFS / DFS
+basic dynamic programming intuition
 ```
 
-Practice:
+Exit criteria:
 
-- 在 `09-MIT-6.5840-Distributed-Systems` 里找 MapReduce 相关代码。
-- 只追一条路径：
+- 能解释为什么有些代码慢。
+- 能看懂简单递归。
+- 能用 BFS/DFS 解决一个小图/树问题。
+- 能说出复杂度的大概量级。
+
+### 0E. Math For CS/AI
+
+不需要先完整重读数学系课程，只补会在 CS/AI 中反复遇到的语言。
+
+Must own:
+
+| Math | First Target |
+| --- | --- |
+| Discrete math | set, relation, graph, induction, logic |
+| Linear algebra | vector, matrix, dot product, norm, eigen intuition |
+| Probability | random variable, distribution, expectation, variance, Bayes |
+| Calculus | derivative, gradient, chain rule |
+| Optimization | loss, gradient descent, local/global minima |
+
+Exit criteria:
+
+- 能读懂 ML 里的向量、矩阵、概率、梯度符号。
+- 能解释一个算法为什么用 graph/set/relation。
+- 能把数学公式翻成代码直觉。
+
+## Layer 0 First Month
+
+这个月只做 Layer 0，不正式开系统课。
+
+### Week 1. Terminal / Git / Python Reading
+
+目标：
 
 ```text
-Worker 问任务 -> Coordinator 分配 -> Worker 执行 -> Worker 汇报 -> Coordinator 记录完成
+能打开一个小 Python 项目，找到入口、运行它、查看改动。
 ```
 
-Stop condition:
+Deliverable:
 
 ```text
-能讲清：为什么 Reduce 要等所有 Map 完成；worker 消失后为什么要重派；重派为什么可能带来重复执行风险。
+notes/00-layer0-week1.md
 ```
 
-### Week 3. Buffer Pool + TCP
-
-Focus:
-
-- 建立“内存和磁盘之间有缓存层”的数据库直觉。
-- 建立“两台机器之间传数据会丢、乱序、重复”的网络直觉。
-
-Must know:
+Template:
 
 ```text
-Buffer Pool:
-page / frame / pin count / dirty flag / eviction / disk
-
-TCP:
-sequence number / ack / retransmission / ordering / duplicate / timeout
-```
-
-Practice:
-
-- 在 BusTub 里找 Buffer Pool 的核心文件和测试。
-- 用人话解释一次 page fetch：
-
-```text
-要读 page -> 先看内存有没有 -> 没有就从磁盘读 -> 放进 frame -> pin 住 -> 用完 unpin
-```
-
-- TCP 先不急着写完整协议，只讲可靠字节流的故事。
-
-Stop condition:
-
-```text
-能讲清：正在被使用的 page 为什么不能被随便淘汰；网络包丢了为什么需要编号、确认、重传。
-```
-
-### Week 4. Syscall + VM + Raft First Touch
-
-Focus:
-
-- 连接“用户程序”和“操作系统”。
-- 连接“源代码”和“运行时执行”。
-- 第一次碰 Raft：只讲选 leader，不讲完整共识。
-
-Must know:
-
-```text
-Syscall:
-user program / trap / kernel / handler / return
-
-VM:
-source / bytecode / stack / instruction pointer / object
-
-Raft:
-leader / follower / candidate / term / vote / heartbeat
-```
-
-Practice:
-
-- xv6 只追一个 syscall/trap 的故事。
-- clox 只追一条 bytecode 执行路径。
-- Raft 只讲 leader election：
-
-```text
-没有 leader -> 节点超时 -> 变 candidate -> 请求投票 -> 赢了变 leader -> 发 heartbeat
-```
-
-Stop condition:
-
-```text
-能分别用 3-5 句话讲 syscall、VM、Raft election 的正常流程和一个失败场景。
-```
-
-## Month 1 Deliverables
-
-月末只需要 6 页 ownership notes：
-
-```text
-01-mapreduce.md
-02-syscall.md
-03-buffer-pool.md
-04-vm.md
-05-tcp.md
-06-raft-election.md
-```
-
-每页只填：
-
-```text
-Module:
-It solves:
-Normal flow:
-Key data/state:
-One invariant:
-One failure mode:
-One verification:
-Files/functions I touched or inspected:
+Project:
+Entry point:
+How to run:
+Key files:
+One data flow:
+Git commands used:
 Still confusing:
 ```
 
-达标标准：
-
-```text
-不用背定义，能用人话复述。
-不用独立写完整实现，但能找入口、说风险、跑一个验证。
-```
-
-## Months 2-3: From Story To Code Path
+### Week 2. Python Basics And Data Flow
 
 目标：
 
 ```text
-从“能讲故事”
-推进到“能追代码路径，能让 agent 帮忙但自己知道在查什么”
+能解释变量、函数、list/dict、模块、错误处理在一个小项目里的作用。
 ```
 
-Tracks:
+Deliverable:
 
-| Track | Scope | Evidence |
+```text
+一个 50-100 行 Python 小脚本
+一页代码阅读 note
+```
+
+### Week 3. Data Structures
+
+目标：
+
+```text
+list / dict / set / stack / queue / tree / graph 都有一个人话模型和一个 Python 小例子。
+```
+
+Deliverable:
+
+```text
+notes/00-data-structures.md
+```
+
+### Week 4. Algorithms And Math Handles
+
+目标：
+
+```text
+能解释复杂度、递归、BFS/DFS、向量/矩阵/概率/梯度的最小直觉。
+```
+
+Deliverable:
+
+```text
+notes/00-algorithms-math-handles.md
+```
+
+Month 1 stop condition:
+
+```text
+不是“学完 CS”。
+是站稳 Layer 0 的入口：
+能读小代码、用工具、讲常见数据结构、知道数学和算法在后面会怎么用。
+```
+
+## Layer 1. 四大硬核主干
+
+进入条件：
+
+```text
+Layer 0 的工具、Python 阅读、数据结构、复杂度直觉基本可用。
+```
+
+四门主干不是按课程孤立学，而是交叉推进。
+
+| Mainline | Core Question | Repo / Evidence |
 | --- | --- | --- |
-| Python / Go / C reading | 读小模块、函数调用、结构体/类、错误处理 | 每周追 2 条代码路径 |
-| Data structures | list/dict/set/queue/tree/graph/hash/B+ tree | 每个结构写一个用途和一个坑 |
-| OS basics | process, syscall, file, virtual memory, lock | xv6 2-3 个路径复盘 |
-| DB basics | page, buffer, index, transaction, MVCC | BusTub buffer + B+ tree ownership note |
-| Distributed basics | RPC, retry, idempotency, leader, log | MapReduce + Raft election/log replication |
-| Testing/debug | log, assertion, minimal reproduction, flaky test | 每个模块至少一个验证实验 |
+| Algorithms | 如何组织数据和步骤，让问题可计算、可扩展？ | 小题、复杂度 note、数据结构实现 |
+| Operating Systems | 程序如何使用 CPU、内存、文件、设备？ | `06-MIT-6.S081-xv6-labs` |
+| Architecture | 代码如何在硬件和内存层次上运行？ | CSAPP-style notes / tiny C demos |
+| Compilers | 代码如何被读懂、转换、执行？ | `10-Stanford-CS143-Compiler` |
 
-Suggested rhythm:
+Layer 1 exit criteria:
 
-```text
-Mon: story + concept
-Tue: code path
-Wed: failure mode
-Thu: verification/test
-Fri: one-page note
-Weekend: optional review or rest
-```
+- 能讲清 process/thread/memory/file/syscall。
+- 能解释 cache/locality/pointer/memory layout 的基本影响。
+- 能解释 source -> token -> AST -> bytecode/IR -> execution。
+- 能用复杂度分析一个简单实现。
 
-Month 3 stop condition:
+## Layer 2. 系统工程主干
+
+进入条件：
 
 ```text
-能拿一个 agent patch，问出 3-5 个有效问题：
-状态在哪里？
-不变量是什么？
-失败模式是什么？
-测试覆盖了什么？
-还有什么没证明？
+至少能读懂小型系统代码，并能解释 OS/architecture/compiler 的基本连接。
 ```
 
-## Months 4-6: Agent-Era Junior Engineer Base
+| Mainline | Core Question | Repo / Evidence |
+| --- | --- | --- |
+| Networks | 数据如何可靠地从一台机器到另一台？ | `07-Stanford-CS144-Sponge` / TCP note |
+| Databases | 数据如何被索引、缓存、查询、并发更新？ | `08-CMU-15-445-BusTub` |
+| Distributed Systems | 多台机器如何分工、复制、容错？ | `09-MIT-6.5840-Distributed-Systems` |
+| Storage / Performance | 系统为什么慢，哪里会丢数据？ | benchmark / profiling / debug diary |
 
-目标：
+Layer 2 exit criteria:
+
+- 能解释 TCP reliable stream。
+- 能解释 buffer pool、B+ tree、transaction/MVCC。
+- 能解释 MapReduce、Raft election、Raft log replication。
+- 能对一个系统说出主要不变量、失败模式、验证方式。
+
+## Layer 3. AI/ML Track
+
+进入条件：
 
 ```text
-能和 Codex 稳定推进中等复杂项目，并开始拥有可靠性判断。
+编程、数据结构、线代、概率、微积分直觉可用。
 ```
 
-Core modules:
-
-| Area | What To Own |
-| --- | --- |
-| Programming | 能读 Python/Go/C 小模块，能做小改，知道错误从哪冒出来 |
-| Algorithms | complexity, sorting/search, recursion, BFS/DFS, basic DP |
-| OS | process/thread, syscall, virtual memory, file, lock |
-| Network | HTTP, TCP, timeout, retry, backoff, idempotency |
-| Database | index, buffer pool, transaction, isolation, MVCC |
-| Distributed | MapReduce, Raft election, Raft log, replicated KV |
-| Compiler/VM | lexer, parser, AST, bytecode, stack VM |
-
-Deliverables:
-
-- 10-15 ownership notes.
-- 3 toy rebuilds:
+推荐顺序：
 
 ```text
-toy MapReduce scheduler
-toy LRU/cache or buffer pool
-toy bytecode VM or parser
+linear regression
+logistic regression
+SVM / tree models / HMM intuition
+neural network + backprop
+CNN / RNN historical context
+Transformer
+LLM training / inference / eval
+RAG / tool use / AI Agent
+SWE Agent
 ```
 
-- 1 debug diary:
+Layer 3 exit criteria:
+
+- 能把模型写成输入、参数、loss、优化、评估。
+- 能解释反向传播和梯度下降的人话模型。
+- 能读懂 Transformer 的主要数据流。
+- 能搭建和评估一个小 AI agent，而不是只调用 API。
+
+## Layer 4. 工业实践层
+
+这层不是最后才开始，而是贯穿全程。但它不替代基础层。
+
+Evidence:
 
 ```text
-bug:
-symptom:
-hypothesis:
-experiment:
-result:
-fix:
-what I learned:
+real project
+tests
+debug diary
+benchmark
+architecture note
+postmortem
+open-source contribution
+research note
+deployment note
 ```
 
-Stop condition:
+Layer 4 exit criteria:
 
-```text
-给一个中等模块，你能和 agent 一起完成：理解 -> 修改 -> 测试 -> 复盘，而不是只等 agent 给答案。
-```
+- 能把 CS 知识迁移到真实项目。
+- 能用 agent 产出代码，同时自己判断可靠性。
+- 能复盘 failure、性能、架构、用户影响。
 
-## Months 7-12: Strong Practical CS Core
+## Timeline
 
-目标：
+这是推荐节奏，不是死线。
 
-```text
-接近工程可用的 CS 本科核心，不追求每门课满分，但关键系统能判断。
-```
+| Time | Main Focus | Expected Outcome |
+| --- | --- | --- |
+| Month 1 | Layer 0 entry | 工具、Python 阅读、数据结构、算法/数学 handles |
+| Months 2-3 | Layer 0 completion | 能读小项目、写小脚本、理解基本 DS/algorithm/math |
+| Months 4-6 | Layer 1 start | 算法 + OS + architecture + compiler 入门 |
+| Months 7-12 | Layer 1 deepen + Layer 2 start | 系统课主干开始连起来 |
+| Months 13-18 | Layer 2 deepen | 网络/数据库/分布式有工程判断 |
+| Months 19-24 | Layer 3 AI/ML + Layer 4 projects | AI track 和真实项目合流 |
 
-Deepen:
+## Score Targets
 
-| Area | Target |
-| --- | --- |
-| Algorithms | 能解释复杂度和常用算法选择，不以刷题为主 |
-| Architecture | cache/locality/memory hierarchy，知道性能为什么差 |
-| OS | 并发、锁、死锁、调度、虚拟内存、文件系统 |
-| Network | TCP 深一点，HTTP/HTTPS，抓包，连接池 |
-| DB | B+ tree, query execution, transaction/MVCC |
-| Distributed | Raft log replication, snapshot, sharding, exactly-once vs at-least-once |
-| Compiler | parser/typecheck/IR/codegen/VM/GC |
-| ML | 线性回归、逻辑回归、反向传播、Transformer 基础，先追可解释实现 |
-
-Deliverables:
-
-- 每个核心区至少一个 toy project 或 deep review。
-- 能对自己的项目做一次 architecture review：
-
-```text
-data model
-request path
-state ownership
-failure modes
-observability
-test plan
-```
-
-Stop condition:
-
-```text
-能看一个真实项目，画出主要数据流和风险点，并指导 agent 写/改/测关键模块。
-```
-
-## Months 12-24: Independent Ownership
-
-目标：
-
-```text
-逐步接近扎实本科核心 ownership，并把 CS 能力迁移回真实项目。
-```
-
-At this level:
-
-- 可以从 scratch 写小版系统。
-- 能解释 tradeoff，而不是只知道某个标准答案。
-- 能读论文/课程资料，并把 idea 落到代码或实验。
-- 能做系统设计、性能分析、故障复盘。
-- 能判断 agent 在哪里可靠、哪里需要人工审查。
-
-Suggested capstones:
-
-```text
-mini database with buffer pool + B+ tree + transaction sketch
-mini distributed KV with Raft-backed replication
-mini language with parser + bytecode VM
-mini network stack / reliable stream
-agent-assisted app with explicit reliability review
-```
-
-## Skill Targets
-
-Use these as rough goals, not exam scores.
+Rough estimates:
 
 | Skill | Now | 1 Month | 3 Months | 6 Months | 12 Months |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Python / code reading | 20-35 | 35-50 | 45-60 | 55-70 | 65-80 |
-| Git / terminal | 25-40 | 45-60 | 55-70 | 65-80 | 75-85 |
-| CS mental models | 10-20 | 30-45 | 40-55 | 55-70 | 65-80 |
-| Code path tracing | 5-15 | 20-35 | 35-50 | 50-65 | 60-75 |
-| Invariants / failure modes | 5-15 | 20-35 | 35-50 | 50-65 | 60-75 |
-| Verification / debug | 10-25 | 30-45 | 40-55 | 55-70 | 65-80 |
+| Tools / Git / terminal | 25-40 | 45-60 | 60-70 | 70-80 | 80+ |
+| Python / code reading | 20-35 | 35-50 | 50-60 | 60-70 | 75+ |
+| Data structures | 10-25 | 25-40 | 45-60 | 60-70 | 75+ |
+| Algorithms | 5-20 | 15-30 | 35-50 | 50-65 | 65+ |
+| CS math | 5-20 | 15-30 | 35-50 | 45-60 | 60+ |
+| Systems mental models | 5-15 | 10-25 | 25-40 | 40-55 | 60+ |
+| Verification / debug | 10-25 | 20-35 | 35-50 | 50-65 | 70+ |
 | AI-assisted execution | 50-65 | 60-75 | 65-80 | 75-85 | 80-90 |
 
-The key metric is not that every number rises equally. The key metric is:
+Key metric:
 
 ```text
-Independent ownership catches up enough that AI-assisted execution becomes trustworthy.
+Independent ownership steadily catches up to AI-assisted execution.
 ```
 
 ## Session Template
 
-Use this for every learning session:
+Use this for every session:
 
 ```text
 Date:
-Module:
+Layer:
+Topic:
 Time spent:
 
-Story:
-Normal flow:
-Code path:
-State / data structures:
-Invariant:
-Failure mode:
-Verification:
+Concept in human words:
+Tiny example:
+Code or command used:
+What I can explain without Codex:
 What Codex helped with:
-What I personally understand now:
-Still confusing:
+One confusion:
 Next tiny step:
 ```
 
-## Anti-Goals
+## Anti-Goals For The First Month
 
-Do not do these in the first month:
+- 不开 OS/DB/Distributed 的硬核实现。
+- 不同时刷五门课。
+- 不把 AI 生成项目误认为自己已经懂 CS。
+- 不追求“本科速通”的爽感。
+- 不用问卷折磨自己。
 
-- Start five full courses at once.
-- Turn every unknown word into a separate rabbit hole.
-- Pretend agent-generated code means independent understanding.
-- Chase ML/LLM depth before code reading and systems basics have handles.
-- Measure progress by hours watched instead of notes, code paths, and verification.
+## Immediate Next Step
 
-## Next Step
-
-Start with Week 1:
+Start here:
 
 ```text
-Pick one small Python project.
-Find the entry point.
-Trace one operation.
-Use git/terminal to inspect the repo.
-Write the first ownership note.
+Layer: 0
+Topic: terminal + git + Python project reading
+Task: pick one small Python project, find entry point, run it, trace one data flow
+Output: notes/00-layer0-week1.md
 ```
-
-Then move to MapReduce as the first CS systems story.
