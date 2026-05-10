@@ -70,7 +70,7 @@ Layer 0 起点：预备层 / 数学 + 编程 + 数据结构
 | Distributed Systems | `09-MIT-6.5840-Distributed-Systems` | active independent repo | 多台机器怎么分工、复制、容错，并对外表现得像一个系统 |
 | Compilers | `10-Stanford-CS143-Compiler` | workspace-tracked practice | 代码怎么被读懂、变成 IR/字节码/机器指令并执行 |
 | Early Experiments | `00-Archive-Early-Experiments` | archive | 早期 C、网络、编译器和概率语言探索材料 |
-| Route / Roadmap / Standards | `LEARNING_ROUTE.md`, `MATH_ROUTE.md`, `ROADMAP.md`, `00_CS_Undergrad_Standard.md` | reference | 当前学习路线、数学路线、长期方向和能力基准 |
+| Route / Roadmap / Standards | `LEARNING_ROUTE.md`, `MATH_MAP.md`, `MATH_ROUTE.md`, `ROADMAP.md`, `00_CS_Undergrad_Standard.md` | reference | 当前学习路线、数学地图、数学路线、长期方向和能力基准 |
 
 ## Mastery Scale
 

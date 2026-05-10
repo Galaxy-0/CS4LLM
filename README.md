@@ -14,6 +14,7 @@ This top-level repository is a workspace manager, not a replacement for the chil
 
 - [ROADMAP.md](./ROADMAP.md): high-level learning path
 - [LEARNING_ROUTE.md](./LEARNING_ROUTE.md): active route through the CS / AI industrial-research undergrad map
+- [MATH_MAP.md](./MATH_MAP.md): CS/AI math concept map, including Concrete Mathematics placement
 - [MATH_ROUTE.md](./MATH_ROUTE.md): Layer 0 math route, scope, utility, and first-pass plan
 - [KNOWLEDGE_MAP.md](./KNOWLEDGE_MAP.md): CS/AI knowledge map and review guide
 - [ASSESSMENT.md](./ASSESSMENT.md): CS capability scorecard for agent-assisted engineering judgment
