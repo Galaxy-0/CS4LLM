@@ -151,6 +151,12 @@ Fast test:
 画一个 TCP/Raft/UI 的简单状态机。
 ```
 
+Visualization:
+
+```text
+visualizations/bfs-dfs-animation.html
+```
+
 这层如果能过，离散数学入门就不是瓶颈。
 
 ## C. 具体数学 / 算法分析层

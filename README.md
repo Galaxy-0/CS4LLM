@@ -20,6 +20,7 @@ This top-level repository is a workspace manager, not a replacement for the chil
 - [ASSESSMENT.md](./ASSESSMENT.md): CS capability scorecard for agent-assisted engineering judgment
 - [BASELINE_QUESTIONNAIRE.html](./BASELINE_QUESTIONNAIRE.html): fillable five-dimension diagnostic with local autosave and Markdown export
 - [BASELINE_QUESTIONNAIRE.md](./BASELINE_QUESTIONNAIRE.md): five-dimension diagnostic for the first month
+- [visualizations/bfs-dfs-animation.html](./visualizations/bfs-dfs-animation.html): animated BFS/DFS graph traversal with highlighted code
 - [GOAL.md](./GOAL.md): CS catch-up operating contract and criteria
 - [00_CS_Undergrad_Standard.md](./00_CS_Undergrad_Standard.md): capability baseline
 - [WORKSPACE.md](./WORKSPACE.md): project map, workflow, and common commands

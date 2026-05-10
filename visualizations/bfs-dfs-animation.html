@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BFS / DFS 动图</title>
+  <style>
+    :root {
+      --bg: #eef2f5;
+      --panel: #ffffff;
+      --soft: #f6f8fa;
+      --ink: #17212b;
+      --muted: #607080;
+      --line: #d7e0e8;
+      --blue: #2f6fbd;
+      --blue-soft: #dcecff;
+      --green: #2c7a55;
+      --green-soft: #daf2e7;
+      --amber: #b66a12;
+      --amber-soft: #fff0d4;
+      --red: #b74b4b;
+      --code: #16202a;
+      --code-line: #223142;
+      --shadow: 0 14px 32px rgba(23, 33, 43, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+      line-height: 1.45;
+    }
+
+    button,
+    select,
+    input {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1280px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0;
+    }
+
+    header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.05;
+    }
+
+    .sub {
+      max-width: 780px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding: 14px;
+      margin-bottom: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    button,
+    select {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px 12px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    button:hover,
+    select:hover {
+      border-color: #a8b8c7;
+    }
+
+    button.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    button.primary:hover {
+      background: #255e9f;
+    }
+
+    .speed {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    input[type="range"] {
+      width: 150px;
+      accent-color: var(--blue);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .card-head h2 {
+      font-size: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 84px;
+      min-height: 28px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 13px;
+      border: 1px solid var(--line);
+    }
+
+    .code {
+      margin: 0;
+      min-height: 520px;
+      overflow: auto;
+      background: var(--code);
+      color: #edf5ff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 14px;
+      line-height: 1.55;
+      padding: 14px 0;
+    }
+
+    .code-line {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 10px;
+      min-height: 25px;
+      padding: 0 16px;
+      white-space: pre;
+    }
+
+    .line-no {
+      color: #8091a2;
+      text-align: right;
+      user-select: none;
+    }
+
+    .code-line.active {
+      background: var(--code-line);
+    }
+
+    .code-line.active .line-no {
+      color: #f6c46a;
+    }
+
+    .visual {
+      display: grid;
+      grid-template-rows: minmax(360px, 1fr) auto;
+      min-height: 520px;
+    }
+
+    .graph-wrap {
+      position: relative;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fafc 100%);
+      min-height: 360px;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+    }
+
+    .edge {
+      stroke: #b8c7d4;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    .edge.active {
+      stroke: var(--amber);
+      stroke-width: 5;
+    }
+
+    .node circle {
+      fill: #fff;
+      stroke: #9dafbf;
+      stroke-width: 3;
+      transition: fill 160ms ease, stroke 160ms ease, stroke-width 160ms ease;
+    }
+
+    .node text {
+      fill: var(--ink);
+      font-size: 17px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+    }
+
+    .node.frontier circle {
+      fill: var(--amber-soft);
+      stroke: var(--amber);
+    }
+
+    .node.visited circle {
+      fill: var(--blue-soft);
+      stroke: var(--blue);
+    }
+
+    .node.current circle {
+      fill: var(--green-soft);
+      stroke: var(--green);
+      stroke-width: 5;
+    }
+
+    .node.returning circle {
+      fill: #f7e1e1;
+      stroke: var(--red);
+    }
+
+    .status {
+      display: grid;
+      gap: 12px;
+      padding: 14px 16px 16px;
+      border-top: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .explain {
+      min-height: 58px;
+      padding: 12px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+    }
+
+    .state-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .state-box {
+      min-height: 74px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .state-title {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      min-height: 28px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      font-weight: 700;
+    }
+
+    .pill.frontier {
+      background: var(--amber-soft);
+      border-color: #e3bc76;
+    }
+
+    .pill.visited {
+      background: var(--blue-soft);
+      border-color: #97c2ee;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid;
+      background: #fff;
+    }
+
+    .dot-current {
+      background: var(--green-soft);
+      border-color: var(--green);
+    }
+
+    .dot-frontier {
+      background: var(--amber-soft);
+      border-color: var(--amber);
+    }
+
+    .dot-visited {
+      background: var(--blue-soft);
+      border-color: var(--blue);
+    }
+
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .note {
+      padding: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .note h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .note p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .layout,
+      .notes {
+        grid-template-columns: 1fr;
+      }
+
+      .code,
+      .visual {
+        min-height: auto;
+      }
+
+      .state-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <h1>BFS / DFS 动图</h1>
+      <p class="sub">同一张图，用两种遍历方式走一遍。BFS 看 queue，一层一层扩散；DFS 看 call stack，一条路走到底再回头。</p>
+    </header>
+
+    <div class="toolbar">
+      <select id="algorithm">
+        <option value="bfs">BFS: queue / 一层一层</option>
+        <option value="dfs">DFS: recursion / 一条路到底</option>
+      </select>
+      <button id="play" class="primary" type="button">播放</button>
+      <button id="step" type="button">单步</button>
+      <button id="reset" type="button">重置</button>
+      <label class="speed">
+        速度
+        <input id="speed" type="range" min="450" max="1800" step="150" value="950">
+      </label>
+      <span class="badge" id="counter">Step 1 / 1</span>
+    </div>
+
+    <div class="layout">
+      <section class="card">
+        <div class="card-head">
+          <h2 id="codeTitle">BFS code</h2>
+          <span class="badge" id="codeBadge">queue</span>
+        </div>
+        <pre class="code" id="code"></pre>
+      </section>
+
+      <section class="card visual">
+        <div class="graph-wrap">
+          <svg id="graph" viewBox="0 0 760 430" role="img" aria-label="Graph traversal animation"></svg>
+        </div>
+        <div class="status">
+          <div class="explain" id="explain"></div>
+          <div class="state-grid">
+            <div class="state-box">
+              <div class="state-title" id="frontierTitle">Queue</div>
+              <div class="pills" id="frontier"></div>
+            </div>
+            <div class="state-box">
+              <div class="state-title">Visited</div>
+              <div class="pills" id="visited"></div>
+            </div>
+          </div>
+          <div class="legend">
+            <span><i class="dot dot-current"></i>当前节点</span>
+            <span><i class="dot dot-frontier"></i>等待访问</span>
+            <span><i class="dot dot-visited"></i>已访问</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="notes">
+      <div class="note">
+        <h3>BFS</h3>
+        <p>用 queue。先访问离起点最近的一层，再扩散到下一层，所以常用来找无权图最短路径。</p>
+      </div>
+      <div class="note">
+        <h3>DFS</h3>
+        <p>用 recursion 或 stack。先沿着一条分支走到底，再回头，常用于树遍历、回溯、检测环。</p>
+      </div>
+      <div class="note">
+        <h3>Visited</h3>
+        <p>visited set 防止重复访问。图里如果有环，没有 visited 很容易无限循环。</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const graph = {
+      A: ["B", "C"],
+      B: ["D", "E"],
+      C: ["F"],
+      D: [],
+      E: ["G"],
+      F: [],
+      G: []
+    };
+
+    const nodes = {
+      A: { x: 380, y: 70 },
+      B: { x: 240, y: 175 },
+      C: { x: 520, y: 175 },
+      D: { x: 145, y: 305 },
+      E: { x: 315, y: 305 },
+      F: { x: 595, y: 305 },
+      G: { x: 385, y: 395 }
+    };
+
+    const code = {
+      bfs: [
+        "from collections import deque",
+        "",
+        "def bfs(graph, start):",
+        "    visited = set()",
+        "    queue = deque([start])",
+        "",
+        "    while queue:",
+        "        node = queue.popleft()",
+        "        if node in visited:",
+        "            continue",
+        "        visit(node)",
+        "        visited.add(node)",
+        "        for nxt in graph[node]:",
+        "            queue.append(nxt)"
+      ],
+      dfs: [
+        "def dfs(graph, node, visited=None):",
+        "    if visited is None:",
+        "        visited = set()",
+        "",
+        "    if node in visited:",
+        "        return",
+        "",
+        "    visit(node)",
+        "    visited.add(node)",
+        "",
+        "    for nxt in graph[node]:",
+        "        dfs(graph, nxt, visited)"
+      ]
+    };
+
+    let mode = "bfs";
+    let steps = [];
+    let index = 0;
+    let playing = false;
+    let timer = null;
+
+    const $ = (id) => document.getElementById(id);
+
+    function cloneList(list) {
+      return Array.from(list);
+    }
+
+    function makeBfsSteps() {
+      const result = [];
+      const visited = new Set();
+      const queue = ["A"];
+
+      result.push({
+        line: 5,
+        current: null,
+        frontier: cloneList(queue),
+        visited: [],
+        edge: null,
+        text: "初始化 queue，把起点 A 放进去。"
+      });
+
+      while (queue.length) {
+        const node = queue.shift();
+        result.push({
+          line: 8,
+          current: node,
+          frontier: cloneList(queue),
+          visited: cloneList(visited),
+          edge: null,
+          text: `从 queue 左边取出 ${node}。BFS 永远先处理最早排队的节点。`
+        });
+
+        if (visited.has(node)) {
+          result.push({
+            line: 10,
+            current: node,
+            frontier: cloneList(queue),
+            visited: cloneList(visited),
+            edge: null,
+            text: `${node} 已经访问过，跳过。`
+          });
+          continue;
+        }
+
+        visited.add(node);
+        result.push({
+          line: 11,
+          current: node,
+          frontier: cloneList(queue),
+          visited: cloneList(visited),
+          edge: null,
+          text: `访问 ${node}，把它加入 visited。`
+        });
+
+        for (const nxt of graph[node]) {
+          queue.push(nxt);
+          result.push({
+            line: 14,
+            current: node,
+            frontier: cloneList(queue),
+            visited: cloneList(visited),
+            edge: `${node}-${nxt}`,
+            text: `发现 ${node} 的邻居 ${nxt}，把 ${nxt} 放到 queue 右边。`
+          });
+        }
+      }
+
+      result.push({
+        line: 7,
+        current: null,
+        frontier: [],
+        visited: cloneList(visited),
+        edge: null,
+        text: "queue 为空，BFS 结束。访问顺序是一层一层扩散。"
+      });
+
+      return result;
+    }
+
+    function makeDfsSteps() {
+      const result = [];
+      const visited = new Set();
+      const stack = [];
+
+      function enter(node, from) {
+        stack.push(node);
+        result.push({
+          line: 1,
+          current: node,
+          frontier: cloneList(stack),
+          visited: cloneList(visited),
+          edge: from ? `${from}-${node}` : null,
+          text: from ? `从 ${from} 递归调用 dfs(${node})。` : "从 A 开始调用 DFS。"
+        });
+
+        if (visited.has(node)) {
+          result.push({
+            line: 6,
+            current: node,
+            frontier: cloneList(stack),
+            visited: cloneList(visited),
+            edge: null,
+            text: `${node} 已经访问过，直接 return。`
+          });
+          stack.pop();
+          return;
+        }
+
+        visited.add(node);
+        result.push({
+          line: 8,
+          current: node,
+          frontier: cloneList(stack),
+          visited: cloneList(visited),
+          edge: null,
+          text: `访问 ${node}。DFS 会先沿当前分支继续往下走。`
+        });
+
+        for (const nxt of graph[node]) {
+          result.push({
+            line: 12,
+            current: node,
+            frontier: cloneList(stack),
+            visited: cloneList(visited),
+            edge: `${node}-${nxt}`,
+            text: `准备从 ${node} 走向 ${nxt}。`
+          });
+          enter(nxt, node);
+        }
+
+        result.push({
+          line: 12,
+          current: node,
+          frontier: cloneList(stack),
+          visited: cloneList(visited),
+          edge: null,
+          returning: node,
+          text: `${node} 的分支走完，返回上一层。`
+        });
+        stack.pop();
+      }
+
+      enter("A", null);
+
+      result.push({
+        line: 1,
+        current: null,
+        frontier: [],
+        visited: cloneList(visited),
+        edge: null,
+        text: "call stack 为空，DFS 结束。访问顺序是一条路走到底再回头。"
+      });
+
+      return result;
+    }
+
+    function setup() {
+      steps = mode === "bfs" ? makeBfsSteps() : makeDfsSteps();
+      index = 0;
+      playing = false;
+      clearInterval(timer);
+      $("play").textContent = "播放";
+      renderCode();
+      render();
+    }
+
+    function renderCode() {
+      $("codeTitle").textContent = mode === "bfs" ? "BFS code" : "DFS code";
+      $("codeBadge").textContent = mode === "bfs" ? "queue" : "recursion";
+      $("code").innerHTML = code[mode].map((line, i) => {
+        const lineNo = i + 1;
+        return `<span class="code-line" data-line="${lineNo}"><span class="line-no">${lineNo}</span><span>${escapeHtml(line)}</span></span>`;
+      }).join("");
+    }
+
+    function render() {
+      const step = steps[index];
+      $("counter").textContent = `Step ${index + 1} / ${steps.length}`;
+      $("frontierTitle").textContent = mode === "bfs" ? "Queue" : "Call stack";
+      $("explain").textContent = step.text;
+      renderPills("frontier", step.frontier, "frontier");
+      renderPills("visited", step.visited, "visited");
+      renderGraph(step);
+      highlightCode(step.line);
+    }
+
+    function renderPills(id, values, type) {
+      const root = $(id);
+      root.innerHTML = values.length
+        ? values.map((value) => `<span class="pill ${type}">${value}</span>`).join("")
+        : `<span class="pill">empty</span>`;
+    }
+
+    function renderGraph(step) {
+      const svg = $("graph");
+      const edges = [];
+      for (const [from, nexts] of Object.entries(graph)) {
+        for (const to of nexts) {
+          const a = nodes[from];
+          const b = nodes[to];
+          const id = `${from}-${to}`;
+          const active = step.edge === id ? " active" : "";
+          edges.push(`<line class="edge${active}" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"></line>`);
+        }
+      }
+
+      const nodeEls = Object.entries(nodes).map(([name, point]) => {
+        const classes = ["node"];
+        if (step.visited.includes(name)) classes.push("visited");
+        if (step.frontier.includes(name)) classes.push("frontier");
+        if (step.current === name) classes.push("current");
+        if (step.returning === name) classes.push("returning");
+        return `
+          <g class="${classes.join(" ")}" transform="translate(${point.x}, ${point.y})">
+            <circle r="26"></circle>
+            <text>${name}</text>
+          </g>
+        `;
+      });
+
+      svg.innerHTML = `${edges.join("")}${nodeEls.join("")}`;
+    }
+
+    function highlightCode(activeLine) {
+      document.querySelectorAll(".code-line").forEach((line) => {
+        line.classList.toggle("active", Number(line.dataset.line) === activeLine);
+      });
+    }
+
+    function stepForward() {
+      if (index < steps.length - 1) {
+        index += 1;
+      } else {
+        stop();
+      }
+      render();
+    }
+
+    function play() {
+      if (playing) {
+        stop();
+        return;
+      }
+      playing = true;
+      $("play").textContent = "暂停";
+      timer = setInterval(stepForward, Number($("speed").value));
+    }
+
+    function stop() {
+      playing = false;
+      $("play").textContent = "播放";
+      clearInterval(timer);
+    }
+
+    function reset() {
+      stop();
+      index = 0;
+      render();
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    $("algorithm").addEventListener("change", (event) => {
+      mode = event.target.value;
+      setup();
+    });
+    $("play").addEventListener("click", play);
+    $("step").addEventListener("click", () => {
+      stop();
+      stepForward();
+    });
+    $("reset").addEventListener("click", reset);
+    $("speed").addEventListener("input", () => {
+      if (playing) {
+        stop();
+        play();
+      }
+    });
+
+    setup();
+  </script>
+</body>
+</html>
