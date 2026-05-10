@@ -1,6 +1,6 @@
 # Layer 1 Core CS Tree
 
-这份文件展开 `CS / AI 工业研究型本科地图` 的第 1 层：
+这份文件展开 `CS / AI 工业研究型本科地图` 的第 1 层。术语中英文对应关系见 [CS_CORE_BILINGUAL_GLOSSARY.md](./CS_CORE_BILINGUAL_GLOSSARY.md)：
 
 ```text
 1. 四大硬核主干：真正的 CS 骨架

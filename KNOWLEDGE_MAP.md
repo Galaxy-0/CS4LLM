@@ -59,7 +59,7 @@ Layer 0 起点：预备层 / 数学 + 编程 + 数据结构
 - AI 协作和项目推进强于独立 CS ownership。
 - OS、数据库、网络、分布式、编译器、AI/ML 都先按后续层级推进，不抢跑。
 - 当前主线看 [LEARNING_ROUTE.md](./LEARNING_ROUTE.md)：先补 Layer 0，再进入四大硬核主干。
-- Layer 1 的四大硬核主干已展开为 [CS_CORE_TREE.md](./CS_CORE_TREE.md)，作为后续索引，不代表当前马上开啃。
+- Layer 1 的四大硬核主干已展开为 [CS_CORE_TREE.md](./CS_CORE_TREE.md)，术语中英文对照见 [CS_CORE_BILINGUAL_GLOSSARY.md](./CS_CORE_BILINGUAL_GLOSSARY.md)，作为后续索引，不代表当前马上开啃。
 
 ## Repository Coverage
 
@@ -71,7 +71,7 @@ Layer 0 起点：预备层 / 数学 + 编程 + 数据结构
 | Distributed Systems | `09-MIT-6.5840-Distributed-Systems` | active independent repo | 多台机器怎么分工、复制、容错，并对外表现得像一个系统 |
 | Compilers | `10-Stanford-CS143-Compiler` | workspace-tracked practice | 代码怎么被读懂、变成 IR/字节码/机器指令并执行 |
 | Early Experiments | `00-Archive-Early-Experiments` | archive | 早期 C、网络、编译器和概率语言探索材料 |
-| Route / Roadmap / Standards | `LEARNING_ROUTE.md`, `CS_CORE_TREE.md`, `MATH_MAP.md`, `MATH_ROUTE.md`, `ROADMAP.md`, `00_CS_Undergrad_Standard.md` | reference | 当前学习路线、四大硬核主干树、数学地图、数学路线、长期方向和能力基准 |
+| Route / Roadmap / Standards | `LEARNING_ROUTE.md`, `CS_CORE_TREE.md`, `CS_CORE_BILINGUAL_GLOSSARY.md`, `MATH_MAP.md`, `MATH_ROUTE.md`, `ROADMAP.md`, `00_CS_Undergrad_Standard.md` | reference | 当前学习路线、四大硬核主干树、双语术语表、数学地图、数学路线、长期方向和能力基准 |
 
 ## Mastery Scale
 
