@@ -157,7 +157,7 @@ Exit criteria:
 
 ### 0E. Math For CS/AI
 
-不需要先完整重读数学系课程，只补会在 CS/AI 中反复遇到的语言。
+不需要先完整重读数学系课程，只补会在 CS/AI 中反复遇到的语言。具体路线见 [MATH_ROUTE.md](./MATH_ROUTE.md)。
 
 Must own:
 
