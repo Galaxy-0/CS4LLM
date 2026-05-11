@@ -59,7 +59,7 @@ Layer 0 起点：预备层 / 数学 + 编程 + 数据结构
 - AI 协作和项目推进强于独立 CS ownership。
 - OS、数据库、网络、分布式、编译器、AI/ML 都先按后续层级推进，不抢跑。
 - 当前主线看 [LEARNING_ROUTE.md](./LEARNING_ROUTE.md)：先补 Layer 0，再进入四大硬核主干。
-- Layer 1 的四大硬核主干已展开为 [CS_CORE_TREE.md](./CS_CORE_TREE.md)，术语中英文对照见 [CS_CORE_BILINGUAL_GLOSSARY.md](./CS_CORE_BILINGUAL_GLOSSARY.md)，作为后续索引，不代表当前马上开啃。
+- Layer 1 的四大硬核主干已展开为双语树 [CS_CORE_TREE.md](./CS_CORE_TREE.md)，术语索引见 [CS_CORE_BILINGUAL_GLOSSARY.md](./CS_CORE_BILINGUAL_GLOSSARY.md)，作为后续索引，不代表当前马上开啃。
 
 ## Repository Coverage
 
