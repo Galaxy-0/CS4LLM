@@ -15,6 +15,7 @@ This top-level repository is a workspace manager, not a replacement for the chil
 - [ROADMAP.md](./ROADMAP.md): high-level learning path
 - [LEARNING_ROUTE.md](./LEARNING_ROUTE.md): active route through the CS / AI industrial-research undergrad map
 - [LEARNING_PROGRESS.html](./LEARNING_PROGRESS.html): visual current knowledge structure and progress dashboard
+- [COURSE_PROGRESS.json](./COURSE_PROGRESS.json): machine-readable course tree, rhythm, dependencies, and status for future agents
 - [CS_CORE_TREE.md](./CS_CORE_TREE.md): inline bilingual Layer 1 deep tree for Algorithms, OS, Architecture, and Compilers
 - [CS_CORE_BILINGUAL_GLOSSARY.md](./CS_CORE_BILINGUAL_GLOSSARY.md): Chinese-English term map for the Layer 1 core CS tree
 - [MATH_MAP.md](./MATH_MAP.md): CS/AI math concept map, including Concrete Mathematics placement
@@ -28,6 +29,7 @@ This top-level repository is a workspace manager, not a replacement for the chil
 - [00_CS_Undergrad_Standard.md](./00_CS_Undergrad_Standard.md): capability baseline
 - [WORKSPACE.md](./WORKSPACE.md): project map, workflow, and common commands
 - `bash scripts/repo-status.sh`: one-shot status check for the workspace and child repositories
+- `python3 scripts/course-progress.py handoff`: one-shot course progress handoff for future agents
 
 ## Projects
 

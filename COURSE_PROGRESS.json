@@ -1,0 +1,359 @@
+{
+  "schema": "cs4llm.course-progress.v1",
+  "updated_at": "2026-05-11",
+  "current_focus": "layer0.practice_bridge",
+  "notes": [
+    "This file is the machine-readable course progress tree for agents.",
+    "Traversal is O(n), where n is the number of course nodes.",
+    "The active learning rule is: concepts are allowed, but new theory should be followed by tiny runnable practice."
+  ],
+  "status_legend": {
+    "done": "learned enough for current route",
+    "partial": "conceptually touched, needs practice",
+    "active": "current focus",
+    "next": "next recommended move",
+    "planned": "future route",
+    "paused": "intentionally deferred",
+    "blocked": "cannot proceed without prerequisite",
+    "later": "known but not in near-term route"
+  },
+  "nodes": [
+    {
+      "id": "layer0",
+      "title_en": "Layer 0 Prerequisites",
+      "title_zh": "预备层：数学 + 编程 + 数据结构",
+      "status": "active",
+      "pace": "now",
+      "depends_on": [],
+      "exit_criteria": [
+        "Can read and lightly edit small Python projects.",
+        "Can explain basic data flow, state, invariant, and complexity.",
+        "Can use Git and terminal as daily tools."
+      ],
+      "children": [
+        {
+          "id": "layer0.tools_git",
+          "title_en": "Tools and Git Survival",
+          "title_zh": "终端 / Git / 仓库生存",
+          "status": "partial",
+          "pace": "now",
+          "depends_on": []
+        },
+        {
+          "id": "layer0.python_reading",
+          "title_en": "Python Reading and Small Edits",
+          "title_zh": "Python 代码阅读和小改动",
+          "status": "partial",
+          "pace": "now",
+          "depends_on": [
+            "layer0.tools_git"
+          ]
+        },
+        {
+          "id": "layer0.data_structures",
+          "title_en": "Core Data Structures",
+          "title_zh": "核心数据结构",
+          "status": "partial",
+          "pace": "now",
+          "depends_on": [
+            "layer0.python_reading"
+          ],
+          "children": [
+            {
+              "id": "layer0.data_structures.linear",
+              "title_en": "List / Stack / Queue",
+              "title_zh": "列表 / 栈 / 队列",
+              "status": "partial",
+              "pace": "now",
+              "depends_on": []
+            },
+            {
+              "id": "layer0.data_structures.tree_graph",
+              "title_en": "Tree / Graph / BFS / DFS",
+              "title_zh": "树 / 图 / BFS / DFS",
+              "status": "partial",
+              "pace": "now",
+              "depends_on": []
+            },
+            {
+              "id": "layer0.data_structures.index",
+              "title_en": "Hash / B+ Tree Intuition",
+              "title_zh": "哈希 / B+ 树直觉",
+              "status": "partial",
+              "pace": "now",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "id": "layer0.discrete_modeling",
+          "title_en": "Discrete Modeling",
+          "title_zh": "离散建模：树 / 图 / 状态机 / 不变量",
+          "status": "partial",
+          "pace": "now",
+          "depends_on": [
+            "layer0.data_structures"
+          ]
+        },
+        {
+          "id": "layer0.complexity",
+          "title_en": "Engineering Complexity",
+          "title_zh": "工程复杂度分析",
+          "status": "partial",
+          "pace": "now",
+          "depends_on": [
+            "layer0.data_structures"
+          ],
+          "artifact": "engineering-complexity-review skill"
+        },
+        {
+          "id": "layer0.invariant_tests",
+          "title_en": "Invariant Tests",
+          "title_zh": "不变量测试",
+          "status": "next",
+          "pace": "now",
+          "depends_on": [
+            "layer0.discrete_modeling",
+            "layer0.complexity"
+          ]
+        },
+        {
+          "id": "layer0.state_machine_design",
+          "title_en": "State Machine Design",
+          "title_zh": "状态机设计",
+          "status": "next",
+          "pace": "now",
+          "depends_on": [
+            "layer0.discrete_modeling"
+          ]
+        },
+        {
+          "id": "layer0.practice_bridge",
+          "title_en": "Practice Bridge",
+          "title_zh": "实践桥接：把概念压进可运行小练习",
+          "status": "active",
+          "pace": "now",
+          "depends_on": [
+            "layer0.python_reading",
+            "layer0.data_structures",
+            "layer0.complexity"
+          ],
+          "exit_criteria": [
+            "One invariant test example can be explained and run.",
+            "One state machine example has status, fields, transitions, and invalid transition checks.",
+            "One function has been analyzed with n/m, hidden expensive operations, risks, and benchmark plan."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layer1",
+      "title_en": "Layer 1 Core CS Trunk",
+      "title_zh": "四大硬核主干",
+      "status": "planned",
+      "pace": "soon",
+      "depends_on": [
+        "layer0.practice_bridge"
+      ],
+      "artifact": "CS_CORE_TREE.md",
+      "children": [
+        {
+          "id": "layer1.algorithms",
+          "title_en": "Algorithms",
+          "title_zh": "算法",
+          "status": "next",
+          "pace": "soon",
+          "depends_on": [
+            "layer0.practice_bridge"
+          ],
+          "children": [
+            {
+              "id": "layer1.algorithms.analysis",
+              "title_en": "Algorithm Analysis",
+              "title_zh": "算法分析：复杂度 / 递推 / 正确性",
+              "status": "next",
+              "pace": "soon",
+              "depends_on": [
+                "layer0.complexity",
+                "layer0.invariant_tests"
+              ]
+            },
+            {
+              "id": "layer1.algorithms.structures",
+              "title_en": "Engineering Data Structures",
+              "title_zh": "工程数据结构：hash / tree / heap / index",
+              "status": "planned",
+              "pace": "soon",
+              "depends_on": [
+                "layer1.algorithms.analysis"
+              ]
+            },
+            {
+              "id": "layer1.algorithms.graphs",
+              "title_en": "Graph Algorithms",
+              "title_zh": "图算法：BFS / DFS / shortest path / SCC",
+              "status": "planned",
+              "pace": "soon",
+              "depends_on": [
+                "layer1.algorithms.analysis"
+              ]
+            },
+            {
+              "id": "layer1.algorithms.engineering",
+              "title_en": "Algorithm Engineering",
+              "title_zh": "算法工程：测试 / oracle / benchmark / profiling",
+              "status": "planned",
+              "pace": "soon",
+              "depends_on": [
+                "layer1.algorithms.analysis"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layer1.os",
+          "title_en": "Operating Systems",
+          "title_zh": "操作系统",
+          "status": "planned",
+          "pace": "later",
+          "depends_on": [
+            "layer1.algorithms.analysis"
+          ],
+          "children": [
+            {
+              "id": "layer1.os.process_syscall",
+              "title_en": "Process / Syscall / Trap",
+              "title_zh": "进程 / 系统调用 / 陷入",
+              "status": "planned",
+              "pace": "later",
+              "depends_on": []
+            },
+            {
+              "id": "layer1.os.memory",
+              "title_en": "Memory / Virtual Memory",
+              "title_zh": "内存 / 虚拟内存",
+              "status": "planned",
+              "pace": "later",
+              "depends_on": [
+                "layer1.os.process_syscall"
+              ]
+            },
+            {
+              "id": "layer1.os.concurrency",
+              "title_en": "Scheduling / Synchronization",
+              "title_zh": "调度 / 同步 / 并发",
+              "status": "planned",
+              "pace": "later",
+              "depends_on": [
+                "layer1.os.process_syscall"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layer1.architecture",
+          "title_en": "Computer Architecture",
+          "title_zh": "计算机体系结构",
+          "status": "planned",
+          "pace": "later",
+          "depends_on": [
+            "layer0.data_structures",
+            "layer0.complexity"
+          ],
+          "children": [
+            {
+              "id": "layer1.architecture.representation",
+              "title_en": "Data Representation / Assembly",
+              "title_zh": "数据表示 / 汇编",
+              "status": "planned",
+              "pace": "later",
+              "depends_on": []
+            },
+            {
+              "id": "layer1.architecture.cache",
+              "title_en": "Cache / Memory Hierarchy",
+              "title_zh": "缓存 / 存储层次",
+              "status": "planned",
+              "pace": "later",
+              "depends_on": [
+                "layer1.architecture.representation"
+              ]
+            },
+            {
+              "id": "layer1.architecture.performance",
+              "title_en": "Performance Modeling",
+              "title_zh": "性能建模",
+              "status": "planned",
+              "pace": "later",
+              "depends_on": [
+                "layer1.architecture.cache"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layer1.compilers",
+          "title_en": "Compilers",
+          "title_zh": "编译器",
+          "status": "planned",
+          "pace": "later",
+          "depends_on": [
+            "layer0.data_structures.tree_graph",
+            "layer0.state_machine_design"
+          ],
+          "children": [
+            {
+              "id": "layer1.compilers.lexer_parser",
+              "title_en": "Lexer / Parser / AST",
+              "title_zh": "词法分析 / 语法分析 / AST",
+              "status": "planned",
+              "pace": "later",
+              "depends_on": []
+            },
+            {
+              "id": "layer1.compilers.vm",
+              "title_en": "Bytecode VM",
+              "title_zh": "字节码虚拟机",
+              "status": "planned",
+              "pace": "later",
+              "depends_on": [
+                "layer1.compilers.lexer_parser"
+              ]
+            },
+            {
+              "id": "layer1.compilers.runtime",
+              "title_en": "Runtime / GC",
+              "title_zh": "运行时 / 垃圾回收",
+              "status": "planned",
+              "pace": "later",
+              "depends_on": [
+                "layer1.compilers.vm"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layer2",
+      "title_en": "Layer 2 Systems Engineering",
+      "title_zh": "系统工程主干：网络 / 数据库 / 分布式 / 存储性能",
+      "status": "later",
+      "pace": "later",
+      "depends_on": [
+        "layer1"
+      ]
+    },
+    {
+      "id": "layer3",
+      "title_en": "Layer 3 AI/ML Track",
+      "title_zh": "AI/ML Track",
+      "status": "paused",
+      "pace": "later",
+      "depends_on": [
+        "layer0.practice_bridge"
+      ],
+      "note": "Paused until engineering practice catches up."
+    }
+  ]
+}
